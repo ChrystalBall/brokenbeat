@@ -1,0 +1,29 @@
+YourBlog 2.0 Wordpress Theme.
+
+A Wordpress Theme by Abhishek Tripathi (www.abhishektripathi.com) of Mediawick Digital Solutions (www.mediawick.com)
+
+------------------------------------------------------------------------------------------------------------------------
+
+Installation Instructions
+
+- Unzip the contents of the zip.
+- Copy the whole web20 folder into your wordpress's wp-content/themes/ folder
+- Go to the Presentation area of your WordPress Admin and Select the 'Web 2.0' theme.
+- Goto Write > Pages & Create pages for About, Archives, Links and Contact.
+- You are done.
+
+Make Sure you donot rename the web20 folder
+
+------------------------------------------------------------------------------------------------------------------------
+
+Custom Wordpress Design Solutions
+
+We also develop custom themes as according to your needs, to know of our portfolio please email me at abhishek@mediawick.com
+
+------------------------------------------------------------------------------------------------------------------------
+
+Hope you enjoy the theme.
+
+Please donot attempt to remove the link attribution in the footer
+
+------------------------------------------------------------------------------------------------------------------------
