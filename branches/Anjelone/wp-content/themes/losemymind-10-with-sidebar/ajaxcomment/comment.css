@@ -1,0 +1,107 @@
+/* CSS Document */
+
+#commentlist {
+border-bottom:1px solid #e8e7d0;
+list-style-type:none;
+padding:0;
+}
+
+#commentlist li {
+border-top:1px solid #e8e7d0;
+background-color:#fff;
+padding:1px 5px 1px 15px;
+}
+
+.commenttitle {
+margin-bottom:0;
+font-size:11px;
+}
+
+.commentmeta {
+margin-top:0;
+font-size:9px;
+color:#999;
+}
+
+.commentlist li {
+list-style:none;
+border:1px solid #DDD;
+clear:both;
+margin:5px 0;
+padding:5px 10px 0;
+}
+
+.commentlist li.trackback {
+border:1px double #EDD;
+}
+
+.author,.author a {
+font-weight:700;
+}
+
+.commentlist .body {
+margin:5px 10px;
+}
+
+.commentlist .body p {
+font-size:12px;
+}
+
+.commentlist li .gravatar {
+border:1px solid #DDD;
+float:right;
+margin:0 0 5px 10px;
+padding:5px;
+}
+
+.commentlist ul {
+border:none;
+margin:7px 0 0 20px;
+padding:0;
+}
+
+.commentlist {
+border:none;
+margin:0;
+padding:0;
+}
+
+.commenthead,.meta {
+font-size:11px;
+font-weight:200;
+color:#666;
+}
+
+.commenthead a,.meta a {
+color:#69F;
+}
+
+form {
+}
+
+.commentform {
+margin:10px 0 10px 20px;
+}
+
+#listcomment {
+white-space:normal !important;
+overflow:hidden !important;
+}
+
+#listcomment a {
+display:inline !important;
+width:auto;
+white-space:normal !important;
+overflow:hidden !important;
+margin:0 !important;
+padding:0 !important;
+}
+
+textarea {
+width:100%;
+border:1px solid #b0b0b0;
+}
+
+#reco span {
+color:#999;
+}
