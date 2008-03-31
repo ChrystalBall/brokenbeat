@@ -1,0 +1,99 @@
+/*
+Theme Name: Green Field
+Theme URL: http://www.elegantdirectory.com/wp-themes/
+Description: Green Field is a 2 columns wordpress theme having a perfect combination of Green and White. Sponsored By: <a target="_blank" href="http://www.elegantdirectory.com">Elegant Directory</a> &amp; <a target="_blank" href="http://www.dirjournal.com">DirJournal Web Directory</a>. Get more of our themes from <a href="http://www.elegantdirectory.com/wp-themes/" target="_blank" title="Free Wordpress Themes">Free Wordpress Themes</a>.
+Author: Elegant Directory
+Author URI: http://www.elegantdirectory.com/wp-themes/
+*/
+
+html{font: normal 13px arial, "Trebuchet MS", Verdana, "Lucida Grande";color:#cccccc;line-height:19px;background:#649037;}
+
+/* Basic Formatting */
+a:link { color: #eee; text-decoration: none;  }
+a:hover, a:active { color: #bbb;  }
+h1, h2, h4, h5, h6 { font-weight: normal; margin: 5px 0 10px; padding: 0; }
+h1 a, h2 a, h4 a, h5 a, h6 a{font-weight: normal;border-bottom-width: 0;}
+h1 { font-size: 28px; }
+h2 { font-size: 26px; }
+h4 { font-size: 20px; }
+h5 { font-size: 18px; }
+h6 { font-size: 16px; }
+ul, ol, blockquote, pre{color: #ccc;padding: 5px 5px 5px 10px;line-height: 1.8em;}
+ul{list-style-type: square;}
+blockquote, pre { background-color:#fff; border-left:1px solid #579647;border-right: 1px solid #579647;font: normal 12px arial, "Trebuchet MS", Verdana;color:#000; }
+
+/* Main Tags */
+body{padding: 0;margin: 0 auto;background:url(images/top_body_bg1.jpg) repeat-x top; padding-top:0px;}
+#container{width: 772px;margin: 0 auto;background:#fff url(images/page-bgg1.jpg) repeat-y center;padding:0px;}
+#header { float: left;margin:0px;background:url(images/header.jpg) no-repeat top center;height:165px;width:100%; }
+#wrapper { text-align: center;}
+#footer{border-bottom:1px dashed #4f8090;clear:both;padding-top:10px;background:#649037;}
+
+/* Top Header */
+#header h1{padding:70px 0 0 10px;margin:0px 0 0 5px;letter-spacing: 0.1em;font:bold 16pt arial, Trebuchet MS, Arial;}
+#header h1 a:hover, #header h1 a:active, #header h1 a{border-bottom-width: 0;color:#fff;text-decoration:none;}
+#header p{font:bold 12px arial, Verdana;padding:0px;margin:2px 0 0 25px;color:#fff;letter-spacing: 0.1em;}
+.basictab{padding:0px 0 2px 0;margin:0 2px 0 2px;font-size:12px;list-style-type: none;text-align:left;background:#579647;float:left;}
+.basictab li{display: inline;margin:0px;padding:0px 0 0 7px;}
+.basictab li a{text-decoration:none;margin-right: 5px;color: #fff;font: normal 11px arial, "Trebuchet MS", Verdana;}
+.basictab li a:visited{color: #eee;}
+.basictab li a:hover{color: black;}
+.basictab li a:active{color: black;}
+.basictab li.selected a{ position: relative;top: 1px;padding-top: 4px;color: black;}
+#navigation1{padding: 0;width: 100%;float: right;margin: 0;}
+.navigation{margin:10px 0px 0px 0;}
+.navigation .next-entries{float:right;}
+.basictab li.page_item{border-left:1px solid #fff;display: inline;margin:0px 0 3px -2px;padding:0px 0 0px 8px;}
+.basictab li.right_item{float:right;margin:-20px 5px 0 0px;padding:0px 0 0 15px;background:url(images/rss.gif) no-repeat left;}
+.basictab li.fav_item{float:right;margin:-20px 10px 0 0px;padding:0px 0 0 15px;background:url(images/srat.gif) no-repeat left;}
+
+
+/* Left Column */
+.leftcol { width: 71%; float: left; margin:0px; text-align: left; padding:0px 5px 0 15px;}
+html>body .leftcol { width: 71%; float: left; margin:0px; text-align: left; padding:0px 10px 0 16px;}
+.leftcol p{font: normal 12px arial, "Trebuchet MS", Verdana;color:#000;clear:both;}
+.leftcol ul, .leftcol ol{ margin: 0 0 0 35px; padding: 0; line-height: 1.5em;  }
+.leftcol li { padding-bottom: 5px; font: normal 12px arial, "Trebuchet MS", Verdana;color:#000; }
+.leftcol h3{ font:bold 14pt arial; padding: 5px 0px 5px 0px; margin: 15px 0 0 0;}
+.leftcol h3 a{color:#000;text-decoration:none;}
+.leftcol a:link { color: #000; border-bottom-color: #999; } 
+.leftcol a:visited { color: #555; border-bottom-color: #789160; }
+.leftcol .month-date{float:right;border:1px solid #aaa;background:#eee;font-size:13px;padding:5px;margin:10px 0px 10px 10px;text-align:center;}
+.leftcol .details{font:bold 8pt arial;color:#949494;background:#DBDBDB;word-spacing:1px;padding:2px 5px 2px 5px;float:left;width:100%;margin:0px 0px 13px 0px}
+.leftcol .details a{border-bottom:none;color:#949494;text-decoration:none;font-weight:bold;}
+.leftcol .details a:hover{color:#888;text-decoration:underline;}
+
+/* Right Column */
+.rightcol { width: 23%; float: left; margin:0 0 0 -2px; text-align: left;padding:0px 0 0 0px;}
+.rightcol ul { margin: 0 0 0 15px; padding:2px 2px 10px 2px; line-height: 1.5em;  }
+.rightcol li { padding:0px; font:normal 11px arial, "Trebuchet MS", Verdana;list-style:none;background:#65a34e;color:#fff;}
+.rightcol h3 { font:bold 14px arial; padding: 5px 10px; margin:20px 0 0px 0; }
+.rightcol ul ul{list-style-type: circle;}
+.rightcol ul ul li{list-style-type:square;line-height: 1.8em;}
+.rightcol_bottom {background:url(images/leaf.jpg) no-repeat center bottom;height:228px;margin:20px 0 0 20px;padding:0px;}
+
+/* Comments Area */
+#comments, #respond {border-bottom: 1px dotted #CCCCCC;padding: 10px 0 5px 0;clear: both;color:#444;}
+.commentlist {margin: 10px 0px;padding-left: 20px;line-height: 130%;}
+.commentlist li{padding: 5px 10px;color:#000;}
+.commentlist .alt {background: #eee;margin-top:10px;}
+.commentlist cite, .commentlist cite a, .commentlist cite a:visited {font-weight: bold;font-style: normal;font-size: 120%;color: #333;}
+.commentlist small {margin-bottom: 5px;display: block;font-size: 87%;}
+#commentform {margin-top: 10px;font: 110% Arial, Helvetica, sans-serif;}
+#commentform p {padding: 6px 0px;margin: 0px;color:#333;}
+#commentform label{color: #787878;font-size: 87%;}
+#commentform input{width: 200px;background:#eee;border: 1px solid #bdd77f;padding: 3px;margin-top: 3px;}
+#commentform textarea{width: 485px;height: 115px;background:#eee;border: 1px solid #999;padding: 2px;margin-top: 3px;}
+#commentform textarea:focus, #commentform input[type="text"]:focus {background: #ffffff;}
+#commentform #submit{background:#bbb;font: bold 12px Arial, Helvetica, sans-serif;color: #ffffff;border: none;float:left;width: 144px;height: 28px;margin:0px 0px 10px 340px;}
+
+/* Extra Sidebar Tags */
+#sidebar h3{font-weight:bold;}
+#sidebar a:link { color: #f9f9f9;}
+#sidebar a:hover { color: #ccc;}
+#sidebar a:visited { color: #eee;text-decoration:none; border-bottom-color: #336699;}
+
+/* Footer Area */
+#footer div{color:#fff;padding:0px 10px 10px 10px;margin:0 0px 0 0px; font:normal 11px arial, "Trebuchet MS", Verdana; }
+#footer div a{color:#eee;text-decoration:none;font:normal 11px arial, "Trebuchet MS", Verdana;}
+#footer span{float:right}

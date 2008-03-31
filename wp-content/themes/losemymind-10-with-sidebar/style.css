@@ -1,0 +1,466 @@
+/*
+Theme Name: LoseMyMind
+Theme URI: http://hellobmw.com/losemymind/
+Description: This is another edition of <a href="http://themes.wordpress.net/other/no-images/4309/losemymind-10/">LoseMyMind 1.0</a> which has a sidebar and supports WordPress Widgets. Read <a href="http://hellobmw.com/losemymind/">this</a> for more information. NOTE: This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 License</a>. This means you may use it for any purpose, and make any changes you like. Just leave my LoseMyMind link under your footer.
+Version: 1.0 with Sidebar
+Author: Arctic
+Author URI: http://hellobmw.com/
+*/
+
+
+
+/* Begin Typography & Colors */
+body {
+	font-family: 'Lucida Grande', Verdana, Arial, Helvetica, Sans-Serif;
+	background: #D5D6D7 url('images/bgcolor.jpg');
+	color: #333;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	}
+
+.clear {
+	clear: both;
+	}
+
+a {
+	color: #48F;
+	text-decoration: none;
+	}
+
+a img {
+	border: none;
+	}
+
+a:hover {
+	color: #6BC;
+	text-decoration: underline;
+	}
+
+a .main_title {
+	color: #36C;
+	}
+	
+h1 {
+	text-align: justify;
+	font-size: 36px;
+	line-height: 12px;
+	padding-left: 40px;
+	}
+
+h1 a, h1 a:hover, h2a, h2 a:hover {
+	text-decoration: none;
+	}
+
+h2 {
+	font-size: 22px;
+	}
+
+h2 a {
+	color: #36C;
+	}
+
+h3 {
+	font-size: 16px;
+	}
+
+#page {
+	background-color: white;
+	text-align: left;
+	margin: 20px auto;
+	padding: auto;
+	width: 800px;
+	background: url('images/back.png') repeat-y top;
+	}
+
+#nav {
+	list-style: none;
+	margin: 0;
+	text-align: center;
+	padding: 10px 0 40px 60px;
+	}
+
+#nav li {
+	float: left;
+	margin-left: 5px;
+	}
+
+#nav .current_page_item a, #nav .current_page_item a:visited{
+	background-color: #6BC;
+	text-decoration: none;
+	}
+
+#nav .page_item a{
+	color: white;
+	text-decoration: none;
+	background-color: #BDF;
+	padding: 2px 12px;
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+	}
+
+#nav .page_item a:hover {
+	background-color: #6BC;
+	border: none;
+	}
+
+#header {
+	background: url('images/headerClear.png') no-repeat bottom center;
+	padding: 0;
+	height: 150px;
+	}
+	
+#header .description {
+	font-size: 16px;
+	text-align: center;
+	}
+
+#header .main_title {
+	font: bold;
+	text-align: center;
+	font-size: 42px;
+}
+
+#logo a {
+	background: url('images/logo.png') no-repeat bottom left;
+	width: 100%;
+	float: left;
+	}
+
+#logo a span {
+	text-indent: -200000px;
+	}
+
+#content {
+	float: left;
+	margin: 0 20px 0 30px !important;
+	margin: 0 20px 0 10px; /* fuck IE */
+	width: 540px;
+	}
+
+#sidebar {
+	float: left;
+	background-color: #FBFBFB;
+	font-size: 12px;
+	text-align: left;
+	width: 200px;
+	margin-top: 10px;
+	}
+
+.sbcontent {
+	width: 180px;
+	margin: auto;
+	}
+
+#sidebar h2 {
+	color: #36C;
+	margin: 5px 5px 0;
+	padding: 0;
+	}
+
+#sidebar ul, #sidebar ul ol {
+	margin: 0;
+	padding: 0;
+	}
+
+#sidebar ul li {
+	list-style-type: none;
+	list-style-image: none;
+	margin-bottom: 15px;
+	}
+
+#sidebar ul p, #sidebar ul select {
+	margin: 5px 5px 8px;
+	}
+
+#sidebar ul ul, #sidebar ul ol {
+	margin: 5px 0 0 10px;
+	}
+
+#sidebar ul ul ul, #sidebar ul ul ol {
+	margin: 0 0 0 10px;
+	}
+
+ol li, #sidebar ul ol li {
+	list-style: decimal outside;
+	}
+
+#sidebar ul ul li, #sidebar ul ol li {
+	margin: 3px 0 0;
+	padding: 0;
+	}
+
+.archive-list {
+	font-size: 12px;
+	list-style: none;
+	margin: 10px 0 0 0;
+	padding-left: 0;
+	}
+
+.archive-list li {
+	display: block;
+	float: left;
+	margin: 0 10px 0 0;
+	padding: 2px 0 2px 10px;
+	width: 150px;
+	}
+
+.archive-list li:hover {
+	background-color: #EDEDED;
+	}
+
+.archive-list a:hover {
+	text-decoration: none;
+	}
+
+.post {
+	margin: 0 0 40px;
+	text-align: justify;
+	}
+
+.entry {
+	font-size: 13px;
+	}
+
+.entry-meta {
+	font-size: 12px;
+	color: #999;
+	}
+
+.entry-tags {
+	/*border: 1px solid #EEE;
+	background-color: #EDEDED;*/
+	background-color: transparent;
+	font-size: 12px;
+	font-weight: bold;
+	color: White;
+}
+
+.entry-related {
+	font-size: 12px;
+	float: left;
+	}
+
+.entry-related ul li {
+	list-style: none;
+	}
+
+.post hr {
+	display: block;
+	}
+
+#footer {
+	font-size: 12px;
+	padding: 20px 0 10px !important;
+	padding: 30px 0 40px; /* fuck IE */
+	width: 800px;
+	clear: both;
+	background: #E7E7E7 url('images/footer.png') no-repeat top;
+	border: none;
+	color: Gray;
+}
+
+.entry a:hover {
+	text-decoration: underline;
+	}
+
+.entry a:visited {
+	color: #9C0;
+	}
+
+.commentlist li, #commentform input, #commentform textarea {
+	font: 12px Arial, Helvetica, Sans-Serif;
+	}
+
+.commentlist li {
+	font-weight: bold;
+	}
+
+.commentlist cite, .commentlist cite a {
+	font-weight: bold;
+	font-style: normal;
+	font-size: 11px;
+	}
+
+.commentlist p {
+	font-weight: normal;
+	line-height: 12px;
+	text-transform: none;
+	}
+
+#commentform p {
+	font-size: 12px;
+	}
+
+.commentmetadata {
+	font-weight: normal;
+	}
+
+small, .nocomments, blockquote, strike {
+	color: #777;
+	}
+
+code {
+	font: 11px 'Courier New', Courier, Fixed;
+	}
+
+acronym, abbr, span.caps
+{
+	font-size: 9px;
+	letter-spacing: 0.7px;
+	}
+
+
+/* End Typography & Colors */
+
+
+/* Begin Images */
+
+/*	Using 'class="alignright"' on an image will (who would've
+	thought?!) align the image to the right. And using 'class="centered',
+	will of course center the image. This is much better than using
+	align="center", being much more futureproof (and valid) */
+
+img.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+img.alignright {
+	padding: 4px;
+	margin: 0 0 2px 7px;
+	display: inline;
+	}
+
+img.alignleft {
+	padding: 4px;
+	margin: 0 7px 2px 0;
+	display: inline;
+	}
+
+.alignright {
+	float: right;
+	}
+
+.alignleft {
+	float: left
+	}
+/* End Images */
+
+
+/* Begin Form Elements */
+.entry form { /* This is mainly for password protected posts, makes them look better. */
+	text-align:center;
+	}
+
+select {
+	width: 130px;
+	}
+
+#commentform {
+	font-size: 12px;
+	}
+
+#commentform input {
+	width: 170px;
+	padding: 2px;
+	margin: 5px 5px 1px 0;
+	}
+
+#commentform textarea {
+	width: 100%;
+	padding: 2px;
+	}
+
+#commentform #submit {
+	margin: 0;
+	float: right;
+	}
+/* End Form Elements */
+
+
+
+/* Begin Comments*/
+.commentlist {
+	padding: 0;
+	text-align: justify;
+	}
+
+.commentlist li {
+	margin: 15px 0 3px;
+	padding: 5px 10px 3px;
+	list-style: none;
+	}
+
+.commentlist p {
+	margin: 10px 5px 10px 0;
+	}
+
+#commentform p {
+	margin: 5px 0;
+	}
+
+.nocomments {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	}
+
+.commentmetadata {
+	margin: 0;
+	display: block;
+	}
+/* End Comments */
+
+
+/* Begin Various Tags & Classes */
+acronym, abbr, span.caps {
+	cursor: help;
+	}
+
+acronym, abbr {
+	border-bottom: 1px dashed #999;
+	}
+
+blockquote {
+	margin: 15px 30px 0 10px;
+	padding-left: 20px;
+	border-left: 5px solid #ddd;
+	}
+
+blockquote cite {
+	margin: 5px 0 0;
+	display: block;
+	}
+
+.center {
+	text-align: center;
+	}
+
+hr {
+	display: none;
+	}
+
+.navigation {
+	font-size: 12px;
+	display: block;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+
+/* End Various Tags & Classes*/
+
+
+/* Begin Google Ads */
+.gg-ref-text {
+	text-align: center;
+	}
+
+.gg-ads-text {
+	text-align: center;
+	float: right;
+	margin-top: 50px;
+	}
+/* End Google Ads */

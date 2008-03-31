@@ -25,6 +25,16 @@
 <body>
 <div id="rap">
 <h1 id="header"><a href="<?php bloginfo('url'); ?>/"><?php bloginfo('name'); ?></a></h1>
+		<div id="iemenu">
+			<ul id="menu">
+				<li><a href="<?php bloginfo('url'); ?>" title="Home">Home</a></li>
+				<li><a href="#" title="About">About</a></li>
+				<li><a href="wordpress/?page_id=3" title="Talk">Talk</a></li>
+				<li><a href="wordpress/?page_id=4" title="Photos">Photos</a></li>
+				<li id="lastlink"><a href="#" title="Family">Family</a></li>
+			</ul>
+		</div>
 
 <div id="content">
+
 <!-- end header -->

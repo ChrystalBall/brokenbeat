@@ -36,5 +36,14 @@ if ( !$withcomments && !is_single() ) {
 		<h1><a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a></h1>
 		<div class="description"><?php bloginfo('description'); ?></div>
 	</div>
+	<!--	<div id="iemenu">
+			<ul id="menu">
+				<li><a href="<?php bloginfo('url'); ?>" title="Home">Home</a></li>
+				<li><a href="#" title="About">About</a></li>
+				<li><a href="/?page_id=3" title="Talk">Talk</a></li>
+				<li><a href="/?page_id=4" title="Photos">Photos</a></li>
+				<li id="lastlink"><a href="#" title="Family">Family</a></li>
+			</ul>
+		</div>-->
 </div>
 <hr />

@@ -1,0 +1,67 @@
+/*  
+Theme Name: Pop Blue
+Theme URI: http://www.blogohblog.com/
+Description: Pop Blue is a 2 columns Wordpress theme. Clean, simple and lightwieght theme. I love to hear of my work being used :). This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 License</a>. This means you may use it for any purpose, and make any changes you like. Just leave my Bob link under your footer :)
+Version: 
+Author: Bob 
+Author URI: http://www.blogohblog.com/
+
+This theme was designed and built by Bob of <a href="http://www.blogohblog.com/">Blog Oh Blog</a> based on the famous <a href="http://binarybonsai.com/kubrick/">Kubrick</a>.
+*/
+body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px;margin:0;padding:0; color:#666;}
+#top{width:800px;height:54px;margin:10px auto;padding:0;}
+#header{margin:0 auto;padding:0;}
+#header h1{text-indent:-10000px;margin:0;padding:0;}
+#header h1 a{display:block;background:url(images/logo.gif) no-repeat left;height:54px;}
+h1, h2, h3 { font-family:Verdana, Arial, Helvetica, sans-serif; padding:0; margin:0; font-size:14px; font-weight:bold;}
+a:link { text-decoration: none; color : #006699; border: none;}
+a:active { text-decoration: none; color : #006699; border: none;}
+a:visited { text-decoration: none; color : #006699; border: none;}
+a:hover	{ text-decoration: underline; color : #4192e5; border: none;} 
+#nav{background-color:#e7f9ff;height:35px;border-bottom:#bce1f4 2px solid;margin:0;padding:0;}
+#nav2{height:35px;width:800px;font-weight:700;margin:0 auto;padding:0;}
+ul.nav2{height:35px;line-height:35px;float:left;list-style:none;font-size:12px;font-weight:700;margin:0;padding:0;}
+ul.nav2 li{float:left !important;list-style-type:none;margin:0;padding:0;}
+ul.nav2 li a,ul.nav2 li a:link,ul.nav2 li a:visited{text-decoration:none;color:#113255;float:left;display:block;padding:0 10px;}
+ul.nav2 li a:hover{color:#4192e5;text-decoration:underline;}
+ul.nav2 li a:active{color:#4192e5;text-decoration:none;}
+ul.nav2 li.current_page_item a{text-decoration:none;color:#4192e5;}
+ul.nav2 li ul{float:left;margin:0;padding:0;}
+.postmetadata { background:#e7f9ff; padding:5px;}
+span.cmt{background:transparent url(images/comment.gif) no-repeat;border:0;margin:0;padding:0 0 5px 20px;}
+span.cty{background:transparent url(images/category.gif) no-repeat;border:0;margin:0;padding:0 0 5px 20px;}
+#main{width:800px;margin:0 auto;padding:0;}
+#content{float:left;width:580px;margin:10px 0 0;padding:0; border-right:1px #d8eaf3 solid;}
+.entry{float:left;width:570px;margin:0;padding:0; overflow:hidden;}
+#sidebar{float:right;width:200px;margin:10px 0 0;padding:0;}
+#rsidebar{float:right;width:200px;margin:0;padding:0; overflow:hidden;}
+#rsidebar h2{font-size:12px;border-bottom:#eee 1px solid;margin:0 0 5px;padding:0;}
+#rsidebar ul{list-style-type:none;margin:0;padding:0;}
+#rsidebar ul li{list-style-type:none;margin:0 0 10px;padding:0;}
+#rsidebar ul li ul{list-style-type:square;margin:0;padding:0 3px;}
+#rsidebar ul li ul li{list-style-type:none;background:transparent url(images/li.gif) no-repeat 0 3px;border:0;margin:0;padding:0 0 3px 15px;}
+.navigation{width:580px;color:#666;margin:0 auto; padding:0;}
+.alignright{float:right;margin-top:10px; margin-bottom:10px;}
+.alignleft{float:left;margin-top:10px; margin-bottom:10px;}
+#searchform { height:35px; line-height:35px; float:right; margin: 0; padding: 0;  }
+input#s { color: #5188d2; width: 200px; border: 1px solid #cbcbcb; background:#fcfcfc;}
+#footer{background:#eafaff;clear:both;height:5px !important;margin:0;padding:0;}
+#footerbox{background:#bce1f4;height:30px;line-height:30px !important;margin:0;padding:0;}
+.footer{width:800px;color:#095278;height:30px;line-height:30px !important;margin:0 auto;padding:0;}
+.footer a:hover{text-decoration:underline;color:#fff;border:none;}
+.footer a:link,.footer a:active,.footer a:visited{text-decoration:underline;color:#25aacd;border:none;}
+.boxcomments{border-top:5px solid #ddd;border-bottom:5px solid #ddd;margin-bottom:20px;width:580px;}
+#commentform{border-top:1px solid #eee;margin:0;padding:15px 15px 1px;}
+#commentform label{display:block;margin:0;}
+#commentform input{width:170px;margin:0 5px 10px 0;padding:1px;}
+#commentform textarea{width:400px;margin:0 0 10px;padding:0;}
+#commentform #submit{margin:0 0 20px;}
+#commentform p{margin:5px 0;}
+ol.commentlist{margin:0 0 1px;padding:0;}
+ol.commentlist :hover{background:#e7f9ff;}
+ol.commentlist li{border-top:1px solid #eee;display:block;list-style:none;margin:0;padding:15px 15px 1px;}
+ol.commentlist li :hover{background:none;}
+ol.commentlist li.commenthead{display:block;list-style:none;margin:0;padding:5px 15px;}
+ol.commentlist li.commenthead h2{margin:0;}
+ol.tblist{border-top:1px solid #fff;list-style:none;margin:0 0 1px;padding:15px;}
+ol.tblist li{display:block;list-style:none;background:#e7f9ff;padding-left:15px;margin:0 0 5px;}

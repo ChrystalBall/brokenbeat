@@ -1,9 +1,9 @@
 === WordPress.com Stats ===
-Contributors: skeltoac
+Contributors: skeltoac, mdawaffe
 Tags: stats, statistics
 Requires at least: 2.1
 Tested up to: 2.3-alpha
-Stable tag: 1.1.1
+Stable tag: 1.2
 
 You can have simple, concise stats with no additional load on your server by plugging into WordPress.com's stat system.
 
@@ -46,7 +46,7 @@ It may take as long as 20 minutes the first time you use it. After that they sho
 
 = Does it count my own hits? =
 
-It does not count the hits of logged in admin users.
+It does not count the hits of logged in users.
 
 = What if the stats don't start showing up? Do I need anything special in my theme? =
 
