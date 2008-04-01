@@ -391,8 +391,8 @@ li#lastlink {
 /***Footer Stuff***/
 #footer {
 	clear: both;
-	/*background-image: url("images/foot-top.gif");
-	background-repeat: no-repeat;*/
+	background-image: url("images/foot-top.gif");
+	background-repeat: no-repeat;
 	width: 740px;
 	padding-top: 8px;
 	color: #FFF;
@@ -401,24 +401,22 @@ li#lastlink {
 }
 
 #footbar {
-	/*background-image: url("images/foot-bar.gif");
-	color: #000;*/
-	color: #c0c0c0;
+	background-image: url("images/foot-bar.gif");
 	width: 739px;
 	height: 20px;
 	margin: 0px auto;
 	text-align: center;
-	font-size: 9px;
+	font-size: 12px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	color: #000;
 	padding-top: 5px;
 	font-family: Verdana;
 	font-weight: bold;
 }
 #footbar a {
- /*color: #87811C;*/
- color: #d0d0d0;
- font-size: 9px;
+ color: #87811C;
+ font-size: 12px;
  }
 
 #footercontent {
