@@ -18,7 +18,7 @@ Author URI: http://www.abhishektripathi.com
 
 #wp-calendar caption {
 	font: bold 1.3em 'Lucida Grande', Verdana, Arial, Sans-Serif;
-	text-align: center;
+	text-align: left;
 	}
 
 #wp-calendar th {
@@ -261,7 +261,7 @@ body {
 }
 
 a:link {
-	color: #87811C;
+	color: #000000;
 	text-decoration: none;
 }
 
@@ -284,7 +284,7 @@ a:hover {
 }
 
 #logo h1 {
-	color: #FFF;
+	color: #000;
 	font-weight: bold;
 	font-size: 40px;
 	margin: 0px;
@@ -307,9 +307,9 @@ a:hover {
 #headerdec {
 	behavior: url("wp-content/themes/web20/iepngfix.htc");
 	background-image: url("images/design.png");
-	width: 179px;
+	width: 209px;
 	height: 97px;
-	margin-left: 526px;
+	margin-left: 0px;
 }
 
 #search {
@@ -417,7 +417,7 @@ li#lastlink {
 	font-weight: bold;
 }
 #footbar a {
- /*color: #87811C;*/
+ /*color: #000000;*/
  color: #d0d0d0;
  font-size: 9px;
  }
@@ -497,7 +497,7 @@ li#lastlink {
 
 .post h2 a {
 	font-family: Arial Rounded MT Bold, Arial;
-	color: #87811C;
+	color: #000000;
 	font-size: 28px;
 	margin: 0px;
 	padding: 0px;
@@ -557,8 +557,8 @@ li#lastlink {
 }
 
 .postfoot {
-	border-top: 1px solid #B6B157;
-	border-bottom: 1px solid #B6B157;
+	border-top: 1px solid #e9a200;
+	border-bottom: 1px solid #e9a200;
 	padding-top: 6px;
 	padding-bottom: 6px;
 	margin-top: 43px;
@@ -574,7 +574,7 @@ li#lastlink {
 	font-family: Arial;
 	font-weight: bold;
 	font-size: 20px;
-	color: #FFF;
+	color: #000;
 	margin-top: 16px;
 	margin-bottom: 2px;
 	text-align: center;
@@ -586,7 +586,7 @@ li#lastlink {
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	width: 177px;
-	color: #FFF;
+	color: #333;
 	font-family: Tahoma;
 	font-size: 11px;
 	font-weight: bold;
@@ -606,7 +606,7 @@ li#lastlink {
 	background-repeat: repeat-y;
 	width: 186px;
 	padding-bottom: 3px;
-	border: 1px solid #DFE882;
+	border: 1px solid #ffffff;
 }
 
 .archivebox ul {
@@ -645,7 +645,7 @@ li#lastlink {
 	background-repeat: repeat-y;
 	width: 186px;
 	padding-bottom: 3px;
-	border: 1px solid #DFE882;
+	border: 1px solid #ffffff;
 }
 
 #sidebar li li{
