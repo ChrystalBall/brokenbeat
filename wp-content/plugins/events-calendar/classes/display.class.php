@@ -188,32 +188,55 @@ class Display_071181 {
         $calendar .= "</tr>\n<tr>";
       }
       if($this->eventList[$day]){
-        $calendar .= '<td onMouseover="ddrivetip(\'';
+        //$calendar .= '<td onMouseover="ddrivetip(\'';
+        $calendar .= '<td';
         $d = date("Y-m-d", mktime(0,0,0,$mmonth, $day, $yyear));
         $results = $this->eventList[$day];
+        $inards = '';
+        $inardsNoStyle = '';
         foreach($results as $r)
         {
-          $calendar .= "<span style=\'font-size:10px;color:black;\'><span style=\'font-weight:bold\'>".__('Title','events-calendar').":</span>".ereg_replace("[\r\n]", " ", stripslashes($r['eTitle']))."<br />";
-          if ( !empty($r['eDescription']) ) $calendar .= "<span style=\'font-weight:bold\'>".__('Description','events-calendar').":</span>".ereg_replace("[\r\n]", " ", stripslashes($r['eDescription']))."<br />";
-          if ( !empty($r['eLocation']) ) $calendar .= "<span style=\'font-weight:bold\'>".__('Location','events-calendar').":</span>".ereg_replace("[\r\n]", " ", stripslashes($r['eLocation']))."<br />";
+          //$inards .= "<span style=\'font-size:10px;color:black;\'><span style=\'font-weight:bold\'>".__('Title','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eTitle']))."<br />";
+          $inardsNoStyle .= "<span class=\'eventPopupText'><span class=\'eventPopupTitle\'>".__('Title','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eTitle']))."<br />";
+          //if ( !empty($r['eDescription']) ) $inards .= "<span style=\'font-weight:bold\'>".__('Description','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eDescription']))."<br />";
+          if ( !empty($r['eDescription']) ) $inardsNoStyle .= "<span class=\'eventPopupTitle\'>".__('Description','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eDescription']))."<br />";
+          //if ( !empty($r['eLocation']) ) $inards .= "<span style=\'font-weight:bold\'>".__('Location','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eLocation']))."<br />";
+          if ( !empty($r['eLocation']) ) $inards .= "<span class=\'eventPopupTitle\'>".__('Location','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eLocation']))."<br />";
+          //if (!empty($r['eStartDate']) && $r['eStartDate'] != '0000-00-00' && $r['eStartTime']!='' && $r['eStartTime']!='00:00:00') {
+          //  $inards .= "<span style=\'font-weight:bold\'>".__('Start Time','events-calendar').": </span>";
+          //  if (!empty($r['eStartDate']) && $r['eStartDate'] != '0000-00-00') $inards .= date($dateFormat, strtotime($r['eStartDate']));
+          //  if($r['eStartTime']!='' && $r['eStartTime']!='00:00:00') {
+          //    $inards .= ", ".date($timeFormat, strtotime($r['eStartTime']));
+          //  }
+          //  $inards .= "<br />";
+          //}
           if (!empty($r['eStartDate']) && $r['eStartDate'] != '0000-00-00' && $r['eStartTime']!='' && $r['eStartTime']!='00:00:00') {
-            $calendar .= "<span style=\'font-weight:bold\'>".__('Start Time','events-calendar').":</span>";
-            if (!empty($r['eStartDate']) && $r['eStartDate'] != '0000-00-00') $calendar .= date($dateFormat, strtotime($r['eStartDate']));
+            $inardsNoStyle .= "<span class=\'eventPopupTitle\'>".__('Start Time','events-calendar').": </span>";
+            if (!empty($r['eStartDate']) && $r['eStartDate'] != '0000-00-00') $inardsNoStyle .= date($dateFormat, strtotime($r['eStartDate']));
             if($r['eStartTime']!='' && $r['eStartTime']!='00:00:00') {
-              $calendar .= ", ".date($timeFormat, strtotime($r['eStartTime']));
+              $inardsNoStyle .= ", ".date($timeFormat, strtotime($r['eStartTime']));
             }
-            $calendar .= "<br />";
+            $inardsNoStyle .= "<br />";
           }
+          //if (!empty($r['eEndDate']) && $r['eEndDate'] != '0000-00-00' && $r['eEndTime']!='' && $r['eEndTime']!='00:00:00') {
+          //  $inards .= "<span style=\'font-weight:bold\'>".__('End Time','events-calendar').": </span>";
+          //  if (!empty($r['eEndDate']) && $r['eEndDate'] != '0000-00-00') $inards .= date($dateFormat, strtotime($r['eEndDate']));
+          //  if($r['eEndTime']!='' && $r['eEndTime']!='00:00:00') {
+          //    $inards .= ", ".date($timeFormat, strtotime($r['eEndTime']));
+          //  }
+          //  $inards .= "<br />";
+          //}
           if (!empty($r['eEndDate']) && $r['eEndDate'] != '0000-00-00' && $r['eEndTime']!='' && $r['eEndTime']!='00:00:00') {
-            $calendar .= "<span style=\'font-weight:bold\'>".__('End Time','events-calendar').":</span>";
-            if (!empty($r['eEndDate']) && $r['eEndDate'] != '0000-00-00') $calendar .= date($dateFormat, strtotime($r['eEndDate']));
+            $inardsNoStyle .= "<span class=\'eventPopupTitle\'>".__('End Time','events-calendar').": </span>";
+            if (!empty($r['eEndDate']) && $r['eEndDate'] != '0000-00-00') $inardsNoStyle .= date($dateFormat, strtotime($r['eEndDate']));
             if($r['eEndTime']!='' && $r['eEndTime']!='00:00:00') {
-              $calendar .= ", ".date($timeFormat, strtotime($r['eEndTime']));
+              $inardsNoStyle .= ", ".date($timeFormat, strtotime($r['eEndTime']));
             }
-            $calendar .= "<br />";
+            $inardsNoStyle .= "<br />";
           }
         }
-        $calendar .= '\',\'white\', 175);" onMouseout="hideddrivetip();" style="color:red;cursor: pointer;text-align:center;">'.$day.'</td>';
+        //$calendar .= $inards . '\',\'white\', 175);" onMouseout="hideddrivetip();" onClick="window.open(\'' . get_option('siteurl') . '/wp-eventPopup.php?date=' . $d . '&content=' . $inards . '\', \'Event Detail\', \'height=200,width=400,status=yes,toolbar=no,menubar=no,location=no\')" style="" class="dateColor">'.$day.'</td>';
+        $calendar .= ' onClick="window.open(\'' . get_option('siteurl') . '/wp-eventPopup.php?date=' . $d . '&content=' . $inardsNoStyle . '\', \'Event Detail\', \'height=200,width=400,status=yes,toolbar=no,menubar=no,location=no\')" style="" class="dateColor">'.$day.'</td>';
       } else $calendar .= "<td style=\"color:black;cursor: pointer;text-align:center;\">$day</td>";
     }
     if($weekday != 7) $calendar .= '<td colspan="'.(7-$weekday).'" class="pad">&nbsp;</td>'; #remaining "empty" days
