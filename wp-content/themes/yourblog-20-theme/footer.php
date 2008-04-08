@@ -4,7 +4,9 @@
 		<?php get_sidebar(); ?>
 	</div>
 
-	<div id="footer">	<!--
+	<div id="footer">
+  <?php wp_footer(); ?>
+  <!--
 		<div id="footercontent">
 		<div class="footbox">
 				<h2>META</h2>
