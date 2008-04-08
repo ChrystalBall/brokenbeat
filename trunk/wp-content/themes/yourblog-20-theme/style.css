@@ -1,4 +1,4 @@
-/*  
+/*
 Theme Name: Yourblog 2.0 theme
 Theme URI: http://demos.mediawick.com/web20/
 Description: A two-columned wordpress theme with a web 2.0ish look
@@ -38,7 +38,7 @@ html>body .entry ul {
 	list-style: none;
 	padding-left: 10px;
 	text-indent: -10px;
-	} 
+	}
 
 html>body .entry li {
 	margin: 7px 0 8px 10px;
@@ -75,7 +75,7 @@ html>body .entry li {
 /* Begin Form Elements */
 #searchform {
 	margin: 10px auto;
-	padding: 5px 3px; 
+	padding: 5px 3px;
 	text-align: center;
 	}
 
@@ -223,12 +223,12 @@ a img {
 	border: none;
 	padding: 3px;
 	}
-	
+
 img {
  	border: none;
 	padding: 3px;
-}		
-	
+}
+
 /* End Various Tags & Classes*/
 
 /***Begin Web 2.0 Specific CSS***/
@@ -301,7 +301,7 @@ a:hover {
 }
 #logo h1 a:hover {
     text-decoration: none;
-	
+
 }
 
 #headerdec {
@@ -340,6 +340,7 @@ ul#menu {
 
 html>body ul#menu {
 	margin-top: 51px;
+/*	margin-top: -68px;*/
 }
 
 #menu li {
@@ -391,8 +392,8 @@ li#lastlink {
 /***Footer Stuff***/
 #footer {
 	clear: both;
-	background-image: url("images/foot-top.gif");
-	background-repeat: no-repeat;
+	/*background-image: url("images/foot-top.gif");
+	background-repeat: no-repeat;*/
 	width: 740px;
 	padding-top: 8px;
 	color: #FFF;
@@ -401,22 +402,24 @@ li#lastlink {
 }
 
 #footbar {
-	background-image: url("images/foot-bar.gif");
+	/*background-image: url("images/foot-bar.gif");
+	color: #000;*/
+	color: #c0c0c0;
 	width: 739px;
 	height: 20px;
 	margin: 0px auto;
 	text-align: center;
-	font-size: 12px;
+	font-size: 9px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	color: #000;
 	padding-top: 5px;
 	font-family: Verdana;
 	font-weight: bold;
 }
 #footbar a {
- color: #87811C;
- font-size: 12px;
+ /*color: #87811C;*/
+ color: #d0d0d0;
+ font-size: 9px;
  }
 
 #footercontent {

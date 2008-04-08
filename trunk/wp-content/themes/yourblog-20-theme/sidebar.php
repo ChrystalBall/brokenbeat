@@ -1,9 +1,9 @@
 		<ul>
 			<?php 	/* Widgetized sidebar, if you have the plugin installed. */
 					if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar() ) : ?>
-			<li>
+			<!--<li>
 				<?php include (TEMPLATEPATH . '/searchform.php'); ?>
-			</li>
+			</li>--<
 
 			<!-- Author information is disabled per default. Uncomment and fill in your details if you want to use it.
 			<li><h2>Author</h2>
@@ -56,16 +56,20 @@
 				<?php wp_list_bookmarks(); ?>
 
 				<li><h2>Meta</h2>
-				<ul>
-					<?php wp_register(); ?>
-					<li><?php wp_loginout(); ?></li>
-					<li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
-					<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
-					<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</a></li>
-					<?php wp_meta(); ?>
-				</ul>
+  				<ul>
+  					<?php wp_register(); ?>
+  					<li><?php wp_loginout(); ?></li>
+  					<?php wp_meta(); ?>
+  				</ul>
 				</li>
 			<?php } ?>
 			
 			<?php endif; ?>
+
+			<li><h2>Search</h2><br />
+				<form action="<?php bloginfo('url'); ?>/" method="post">
+					<input type="text" value="<?php the_search_query(); ?>" name="s" size="15"/>
+					<input id="submit" type="image" src="<?php bloginfo('template_directory'); ?>/images/search.gif"  value="Search" />
+  			</form>
+			</li>
 		</ul>

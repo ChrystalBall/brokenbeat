@@ -25,20 +25,18 @@
 		<div id="logo"><h1><a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a></h1></div>
 		<div id="headerdec"></div>
 		<div id="search">
-			<form action="<?php bloginfo('url'); ?>/" method="post">
-				<div>
-					<input type="text" value="<?php the_search_query(); ?>" name="s"  />
-					<input id="submit" type="image" src="<?php bloginfo('template_directory'); ?>/images/search.gif"  value="Search" />
-				</div>
+		  <form action="<?php bloginfo('url'); ?>/" method="post">
+				<div style="height: 20px;">
+					<!--<input type="text" value="<?php the_search_query(); ?>" name="s"  />
+					<input id="submit" type="image" src="<?php bloginfo('template_directory'); ?>/images/search.gif"  value="Search" />-->
+					
+		    </div>
 			</form>
-		</div>
+		</div><!---->
 		<div id="iemenu">
 			<ul id="menu">
-				<li><a href="<?php bloginfo('url'); ?>" title="Home">Home</a></li>
-				<li><a href="#" title="About">About</a></li>
-				<li><a href="#" title="Links">Links</a></li>
-				<li><a href="#" title="Photos">Photos</a></li>
-				<li id="lastlink"><a href="#" title="Friends">Friends</a></li>
+				<!--<li><a href="<?php bloginfo('url'); ?>" title="Home">Home</a></li>-->
+				<?php wp_list_pages('sort_column=menu_order&depth=1&title_li='); ?>
 			</ul>
 		</div>
 	</div>
