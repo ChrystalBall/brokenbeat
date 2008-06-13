@@ -653,7 +653,11 @@ function forum_get_menu($what, $feed_link = '', $mark_as_solved = '', $mark_as_u
 	$t1 .= "<table cellpadding='0' cellspacing='0'><tr>";
 	if(forum_get_reg() == true){
 		if($user_ID){
-			$visit = "<span><br />You last visited: ".date(get_option('forum_date_format'), get_usermeta($user_ID, 'lastvisit'))."</span>";
+      $lastvisit = get_usermeta($user_ID, 'lastvisit');
+      if ($lastvisit == "" || $lastvisit == null)
+        $visit = "<span><br />You haven't visited before!</span>";
+      else
+			  $visit = "<span><br />You last visited: ".date(get_option('forum_date_format'), $lastvisit)."</span>";
 			$wel .= "Welcome, $user_name. $visit";
 			$menu .= "$m $logout | $prof | $search $newpost $solve";
 		}

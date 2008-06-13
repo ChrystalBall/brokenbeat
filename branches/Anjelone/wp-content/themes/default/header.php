@@ -6,8 +6,6 @@
 
 <title><?php bloginfo('name'); ?> <?php if ( is_single() ) { ?> &raquo; Blog Archive <?php } ?> <?php wp_title(); ?></title>
 
-<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" /> <!-- leave this for stats -->
-
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
@@ -16,7 +14,7 @@
 
 <?php
 // Checks to see whether it needs a sidebar or not
-if ( !$withcomments && !is_single() ) {
+if ( !empty($withcomments) && !is_single() ) {
 ?>
 	#page { background: url("<?php bloginfo('stylesheet_directory'); ?>/images/kubrickbg-<?php bloginfo('text_direction'); ?>.jpg") repeat-y top; border: none; }
 <?php } else { // No sidebar ?>
@@ -36,14 +34,5 @@ if ( !$withcomments && !is_single() ) {
 		<h1><a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?></a></h1>
 		<div class="description"><?php bloginfo('description'); ?></div>
 	</div>
-	<!--	<div id="iemenu">
-			<ul id="menu">
-				<li><a href="<?php bloginfo('url'); ?>" title="Home">Home</a></li>
-				<li><a href="#" title="About">About</a></li>
-				<li><a href="/?page_id=3" title="Talk">Talk</a></li>
-				<li><a href="/?page_id=4" title="Photos">Photos</a></li>
-				<li id="lastlink"><a href="#" title="Family">Family</a></li>
-			</ul>
-		</div>-->
 </div>
 <hr />
