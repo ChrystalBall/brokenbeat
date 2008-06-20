@@ -32,6 +32,10 @@ add_filter('the_content', 'pf_start_train', 1);
 //register a widget only after all of the plugins have been loaded
 add_action('plugins_loaded', 'pf_stats_widget_init');
 //==========================================================================================
+//global vars
+$edit_profile_link = '<a href src="' . get_bloginfo('wpurl') . '/wp-admin/profile.php">Edit My Profile</a>';
+$login_link = '<a href src="' . get_bloginfo('wpurl') . '/wp-login.php?redirect_to=">Login</a>';
+$logout_link = '<a href src="' . get_bloginfo('wpurl') . '/wp-login.php?action=logout&amp;redirect_to=">Logout</a>';
 
 //adds the admin menu
 function pf_admin_menu()
@@ -556,6 +560,12 @@ function pf_output_directory($start, $records, $lastpage)
 	$page = round($_GET['page']);
 	$character = pf_directory_url_char();
 	
+	if (is_user_logged_in()) {
+		$output .= $edit_profile_link . "&nbsp;&nbsp;";
+		$output .= $logout_link;
+	} else {
+		$output .= $login_link;
+	}
 	$output .= '<table border="0">';
 	$output .= '<tr>';
 	$output .= '<th>Name</th>';
