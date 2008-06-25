@@ -2,8 +2,8 @@
 /*
 Plugin Name: Events Calendar
 Plugin URI: http://www.lukehowell.com/events-calendar/
-Description: Calendar to display events.  There is section under the manage tab for creating and editing events.  There are also widget options that allow for some pretty cool options.  This plugin can also be used with the k2 theme as a sidebar module.  Enjoy.
-Version: 5.8.1
+Description: There are options under the widget options to specify the view of the calendar in the sidebar.  The widget can be a list for upcoming events or a calendar.  If you do not have a widget ready theme then you can place '&lt;?php sidebarEventsCalendar();?&gt;' in the sidebar file.  If you want to display a large calendar in a post or a page, simply place "[[EventsCalendarLarge]]" in the html of the post or page.  Make sure to leave off the quotes.
+Version: 6.3.2
 Author: Luke Howell
 Author URI: http://www.lukehowell.com/
 
@@ -21,139 +21,108 @@ GNU General Public License for more details.
 You can see a copy of GPL at <http://www.gnu.org/licenses/>
 ---------------------------------------------------------------------
 */
-define('EVENTSCALENDARPATH', ABSPATH."wp-content/plugins/events-calendar/");
-define('EVENTSCALENDARURL', get_option('siteurl')."/wp-content/plugins/events-calendar/");
-define("ICS_DEBUG",FALSE);
-/////define("ICS_CACHE",EVENTSCALENDARPATH."cache");
-define("ICS_MAXAGE",0);
+define('EVENTSCALENDARPATH', ABSPATH.'wp-content/plugins/events-calendar');
+define('EVENTSCALENDARCLASSPATH', EVENTSCALENDARPATH);
+define('EVENTSCALENDARURL', get_option('siteurl').'/wp-content/plugins/events-calendar');
+define('EVENTSCALENDARJSURL', EVENTSCALENDARURL.'/js');
+define('EVENTSCALENDARCSSURL', EVENTSCALENDARURL.'/css');
+define('EVENTSCALENDARIMAGESURL', EVENTSCALENDARURL . '/images');
 
-if (function_exists('load_plugin_textdomain')) {
-  load_plugin_textdomain('events-calendar', EVENTSCALENDARPATH . "languages/");
+require_once(EVENTSCALENDARCLASSPATH . '/ec_day.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_calendar.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_db.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_widget.class.php');
+require_once(EVENTSCALENDARCLASSPATH . '/ec_management.class.php');
+
+
+if(isset($_GET['EC_view']) && $_GET['EC_view'] == 'day') {
+  $EC_date = date('Y-m-d', mktime(0, 0, 0, $_GET['EC_month'], $_GET['EC_day'], $_GET['EC_year']));
+  $day = new EC_Day();
+  $day->display($EC_date);
+  exit();
 }
 
-require_once(EVENTSCALENDARPATH . "classes/management.class.php");
-require_once(EVENTSCALENDARPATH . "classes/event.class.php");
-require_once(EVENTSCALENDARPATH . "classes/external.class.php");
-require_once(EVENTSCALENDARPATH . "classes/display.class.php");
-require_once(EVENTSCALENDARPATH . "classes/db.class.php");
-require_once(EVENTSCALENDARPATH . "classes/js.class.php");
-
-if( class_exists('Management_071181') && class_exists('Event_071181') && class_exists('DB_071181') ) :
-
-if (isset($_POST['mmonth'])) { $mmonth = $_POST['mmonth']; $mmonth = ereg_replace ("[[:space:]]", "", $mmonth); $mmonth = ereg_replace ("[[:punct:]]", "", $mmonth); $mmonth = ereg_replace ("[[:alpha:]]", "", $mmonth); }
-if (isset($_POST['yyear'])) { $yyear = $_POST['yyear']; $yyear = ereg_replace ("[[:space:]]", "", $yyear); $yyear = ereg_replace ("[[:punct:]]", "", $yyear); $yyear = ereg_replace ("[[:alpha:]]", "", $yyear); if ($yyear < 1990) { $yyear = 1990; } if ($yyear > 2035) { $yyear = 2035; } }
-if (isset($_POST['today'])) { $ttoday = $_POST['today']; $ttoday = ereg_replace ("[[:space:]]", "", $ttoday); $ttoday = ereg_replace ("[[:punct:]]", "", $ttoday); $ttoday = ereg_replace ("[[:alpha:]]", "", $ttoday); }
-
-if(isset($_POST['AddEventSubmitted']))
-{
-  $eStartTime = $_POST['eAllDay']=='checked' ? '' : $_POST['eStartTime'];
-  $eEndTime = $_POST['eAllDay']=='checked' ? '' : $_POST['eEndTime'];
-  $eStartDate = (isset($_POST['eStartDate'])&&!empty($_POST['eStartDate'])) ? $_POST['eStartDate'] : date("Y-m-d");
-  $eEndDate = (isset($_POST['eEndDate'])&&!empty($_POST['eEndDate'])) ? $_POST['eEndDate'] : $eStartDate;
-  $event = new Event_071181($_POST['eTitle'], $_POST['eDescription'], $_POST['eLocation'], $eStartDate, $eStartTime, $eEndDate, $eEndTime, $_POST['accessLevel'], NULL);
-  $event->addEvent();
-  $explodedDate = explode("-", $eStartDate);
-  $mmonth = $explodedDate[1];
-  $yyear = $explodedDate[0];
+if(isset($_GET['EC_action']) && $_GET['EC_action'] == 'switchMonth') {
+  $calendar = new EC_Calendar();
+  $calendar->displayWidget($_GET['EC_year'], $_GET['EC_month']);
+  exit();
 }
-if(isset($_POST['EditEventSubmitted']))
-{
-  if($_POST['eAllDay']=='checked')
-  {
-    $eStartTime = '';
-    $eEndTime = '';
+
+if(isset($_GET['EC_action']) && $_GET['EC_action'] == 'switchMonthLarge') {
+  $calendar = new EC_Calendar();
+  $calendar->displayLarge($_GET['EC_year'], $_GET['EC_month']);
+  exit();
+}
+
+if(isset($_GET['EC_action']) && $_GET['EC_action'] == 'ajaxDelete') {
+  $db = new EC_DB();
+  $db->deleteEvent($_GET['EC_id']);
+  exit();
+}
+
+function EventsCalendarINIT() {
+  wp_enqueue_script('jquerydimensions', '/wp-content/plugins/events-calendar/js/jquery.dimensions.min.js', array('jquery'), '1.2');
+  wp_enqueue_script('jquerytooltip', '/wp-content/plugins/events-calendar/js/jquery.tooltip.min.js', array('jquery'), '1.2');
+  wp_enqueue_script('thickbox');
+  $widget = new EC_Widget();
+  $management = new EC_Management();
+  if(!function_exists('register_sidebar_widget')) return;
+  register_sidebar_widget(__('Events Calendar','events-calendar'), array(&$widget, 'display'));
+  register_widget_control(__('Events Calendar','events-calendar'), array(&$management, 'widgetControl'));
+}
+
+function EventsCalendarManagementINIT() {
+  if(isset($_GET['page']) && $_GET['page'] == 'events-calendar') {
+    wp_enqueue_script('jquerydimensions', '/wp-content/plugins/events-calendar/js/jquery.dimensions.min.js', array('jquery'), '1.2');
+    wp_enqueue_script('jquerytooltip', '/wp-content/plugins/events-calendar/js/jquery.tooltip.min.js', array('jquery'), '1.2');
+    wp_enqueue_script('jquerydatepicker', '/wp-content/plugins/events-calendar/js/jquery.datepicker.min.js', array('jquery'), '3.4.3');
+    wp_enqueue_script('jquerytimepicker', '/wp-content/plugins/events-calendar/js/jquery.timepicker.min.js', array('jquery'), '0.1');
   }
-  else
-  {
-    $eStartTime = $_POST['eStartTime'];
-    $eEndTime = $_POST['eEndTime'];
+  $options = get_option('optionsEventsCalendar');
+  $EC_userLevel = isset($options['accessLevel']) && !empty($options['accessLevel']) ? $options['accessLevel'] : 'level_10';
+  $management = new EC_management();
+  add_submenu_page('events-calendar', 'Events Calendar', 'Calendar', $EC_userLevel,  'events-calendar', array(&$management, 'calendarOptions'));
+  add_menu_page('Events Calendar', 'Events Calendar', $EC_userLevel, 'events-calendar', array(&$management, 'display'));
+  add_submenu_page('events-calendar', 'Events Calendar Options', 'Options', $EC_userLevel, 'events-calendar-options', array(&$management, 'calendarOptions'));
+}
+  
+
+function EventsCalendarHeaderScript() {
+?>
+  <link type="text/css" rel="stylesheet" href="<?php echo get_option('siteurl');?>/wp-includes/js/thickbox/thickbox.css?1" />
+  <link type="text/css" rel="stylesheet" href="<?php echo EVENTSCALENDARCSSURL;?>/events-calendar.css" />
+<?php
+}
+
+function EventsCalendarAdminHeaderScript() {
+  if(isset($_GET['page']) && $_GET['page'] == 'events-calendar') {
+?>
+  <link type="text/css" rel="stylesheet" href="<?php echo EVENTSCALENDARCSSURL;?>/events-calendar-management.css" />
+<?php
   }
-  $event = new Event_071181($_POST['eTitle'], $_POST['eDescription'], $_POST['eLocation'], $_POST['eStartDate'], $eStartTime, $_POST['eEndDate'], $eEndTime, $_POST['accessLevel'], $_POST['eID']);
-  $event->updateEvent();
-  $explodedDate = explode("-", $_POST['eStartDate']);
-  $mmonth = $explodedDate[1];
-  $yyear = $explodedDate[0];
-}
-if(isset($_GET['DeleteEventSubmitted']))
-{
-  $event = new Event_071181(NULL, NULL, NULL, $_GET['eStartDate'], NULL, NULL, NULL, $_GET['eID']);
-  $event->deleteEvent();
-  $explodedDate = explode("-", $_GET['eDate']);
-  $mmonth = $explodedDate[1];
-  $yyear = $explodedDate[0];
 }
 
-if(isset($_POST['AddExternalSubmitted']))
-{
-  $external = new External_071181($_POST['eType'], $_POST['eName'], $_POST['eAddress'], NULL);
-  $external->addAddress();
-  $mmonth = $_POST['mmonth'];
-  $yyear = $_POST['yyear'];
+function EventsCalendarActivated() {
+  $db = new EC_DB();
+  $db->createTable();
 }
 
-if(isset($_POST['EditExternalSubmitted']))
-{
-  $external = new External_071181($_POST['eType'], $_POST['eName'], $_POST['eAddress'], $_POST['eID']);
-  $external->updateAddress();
-  $mmonth = $_POST['mmonth'];
-  $yyear = $_POST['yyear'];
-}
-
-if(isset($_GET['DeleteExternalSubmitted']))
-{
-  $external = new External_071181(NULL, NULL, NULL, $_GET['id']);
-  $external->deleteAddress();
-  $mmonth = $_GET['month'];
-  $yyear = $_GET['year'];
-}
-
-$mmonth = (isset($mmonth)) ? $mmonth : date("n",time());
-$yyear = (isset($yyear)) ? $yyear : date("Y",time());
-$ttoday = (isset($ttoday))? $ttoday : date("j", time());
-$firstDay = date("Y-m-d", mktime(0,0,0,$mmonth,1,$yyear));
-$lastDay = date("Y-m-t",mktime(0,0,0,$mmonth,1,$yyear));
-
-$db = new DB_071181();
-$display = new Display_071181($firstDay, $lastDay, $mmonth, $yyear);
-$js = new JS_071181();
-$management = new Management_071181($firstDay, $lastDay, $mmonth, $yyear);
-
-function ManagementInit_071181()
-{
-  global $mmonth, $yyear, $firstDay, $lastDay;
-  
-  $management = new Management_071181($firstDay, $lastDay, $mmonth, $yyear);
-  
-  $options = get_option('widgetEventsCalendar');
-  $accessLevel = $options['accessLevel'];
-  
-  add_submenu_page('edit.php', __('Events Calendar','events-calendar'), __('Events Calendar','events-calendar'), $accessLevel, basename(__FILE__), array(&$management, 'displayManagementPage'));
-}
-function widgetInit_071181()
-{
-  global $firstDay, $lastDay;
-  $eDate = explode("-", $firstDay);
-  $mmonth = $eDate[1];
-  $yyear = $eDate[0];
-  
-  $management = new Management_071181($firstDay, $lastDay, $mmonth, $yyear);
-  $display = new Display_071181($firstDay, $lastDay, $mmonth, $yyear);
-  
-  if( !function_exists('register_sidebar_widget') )
-  {
-    return;
+function filterEventsCalendarLarge($content) {
+  if(preg_match("[EventsCalendarLarge]",$content)) {
+    $calendar = new EC_Calendar();  
+    $content = str_replace("[[EventsCalendarLarge]]", $calendar->displayLarge(date('Y'), date('m')), $content);
   }
-  
-  register_sidebar_widget(__('Events Calendar','events-calendar'), array(&$display, 'displayWidget'));
-  register_widget_control(__('Events Calendar','events-calendar'), array(&$management, 'displayWidgetControl'), 360, 360);
+  return $content;
 }
-add_action('activate_events-calendar/events-calendar.php', array(&$db, 'createTable'));
-add_action('admin_menu', 'ManagementInit_071181');
-add_action('plugins_loaded', 'widgetInit_071181');
-add_action('wp_head', array(&$js, 'addHeaderScript'));
-add_action('wp_footer', array(&$js, 'printToolTipScript'));
-add_action('admin_head', array(&$js, 'addHeaderScriptManagement'));
-add_action('admin_footer', array(&$js, 'printToolTipScript'));
-wp_enqueue_script('jquery');
-endif;
+
+function SidebarEventsCalendar() {
+  $calendar = new EC_Calendar();
+  $calendar->displayWidget(date('Y'), date('m'));
+}
+add_action('activate_events-calendar/events-calendar.php', 'EventsCalendarActivated');
+add_action('plugins_loaded', 'EventsCalendarINIT');
+add_action('admin_menu', 'EventsCalendarManagementINIT');
+add_action('wp_head', 'EventsCalendarHeaderScript');
+add_action('admin_head', 'EventsCalendarAdminHeaderScript');
+add_filter('the_content', 'filterEventsCalendarLarge');
 ?>
