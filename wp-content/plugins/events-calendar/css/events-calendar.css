@@ -1,0 +1,63 @@
+﻿/*
+ * Thickbox CSS
+ */
+div#TB_title {
+	/*background-color:#105681;*/
+	background-color:#000000;
+	color:#FFFFFF;
+}
+div#TB_title a, div#TB_title a:visited {
+  color: #cfcfcf;
+}
+
+/*
+ * JQuery Tooltip
+ */
+#tooltip {
+  position: absolute;
+  z-index: 3000;
+  border: 1px solid #111;
+  background-color: #eee;
+  padding: 5px;
+  opacity: 1;
+  width: 200px;
+}
+#tooltip h3, #tooltip div { margin: 0; font-size:12px; font-weight:normal; color: #000;}
+
+#tooltip ul {
+  padding: 0;
+}
+#tooltip li {
+  margin: 0 10px;
+}
+
+/*
+ * Large Calendar
+ */
+/*
+ * Calendar formatting
+ */
+#wp-calendarLarge {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+#wp-calendarLarge td {
+  border: thin solid black;
+  width: 150px;
+  height: 100px;
+  padding: 0;
+  vertical-align: top;
+}
+
+#wp-calendarLarge .dayHead {
+  background-color:#333333;
+  color: white;
+  font-weight: bold;
+  z-index:1000;
+}
+
+#todayLarge {
+background:#9BA9CF;
+color:#FFF;
+}

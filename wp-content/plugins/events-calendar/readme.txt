@@ -1,26 +1,91 @@
 === Events Calendar ===
-Contributors: snumb130
+
+Contributors: snumb130, bbodine1, ronbme
 Donate link: http://www.lukehowell.com/donate
-Version: 5.8.1
-Tags: widget, admin, sidebar, google, plugin, javascript, date, time, calendar
-Requires at least: 2.1
-Tested up to: 2.5
-Stable tag: 5.8.1
+Version: 6.3.2
+Tags: widget, admin, sidebar, plugin, javascript, date, time, calendar, thickbox, jquery, tooltip, ajax
+Requires at least: 2.5
+Tested up to: 2.5.1
+Stable tag: 6.3.2
+
+Events-Calendar is a diverse replacement for the original calendar included with WordPress adding many useful functions to keep track of your events. The plugin has an easy to use admin section that displays a big readable calendar and lets you add and delete events. The plugin is widget ready so you can easily add a small calendar to the main sidebar with the ability to roll over the highlighted event day to see a brief description of the event or click the day to get a full description of the event without ever leaving your current page. If you are not using a widget ready theme, you can still have the calendar on your sidebar.  Simply place "<?php sidebarEventsCalendar();?>" in the sidebar file. The widget can also show a specified number of events as a list.  You will find these options under the widget option.
 
 == Description ==
-When updating, make sure to check that any new widget options are as you want them.  You should also deactivate and reactivate the plugin when updating.
-I wrote this because a friend of mine requested it.  I am sure there are some things to work out so I await your feedback.  Once you activate the plugin you can start adding events.  I am working on adding support for external calendars but it is not complete yet. There are instructions under installation for using this widget as a k2 sidebar module.  Please send me any errors you get during testing, if find a fix, let me know and I will incorporate it.  I am also open to any ideas.  If you have previously submitted a bug, please send it again if you are still having trouble.  I wasn't keeping track with what was fix and not as much as I should.  If you have an error please send me as much information as you can regarding the error so that I can best approach it.
 
-The calendar will display your events in the admin section and allow you to edit and delete them.  Details will be shown when you hover over the event title.
+Events-Calendar is a diverse replacement for the original calendar included with WordPress adding many useful functions to keep track of your events. The plugin has an easy to use admin section that displays a big readable calendar and lets you add and delete events. The plugin is widget ready so you can easily add a small calendar to the main sidebar with the ability to roll over the highlighted event day to see a brief description of the event or click the day to get a full description of the event without ever leaving your current page. If you are not using a widget ready theme, you can still have the calendar on your sidebar.  Simply place "<?php sidebarEventsCalendar();?>" in the sidebar file. The widget can also show a specified number of events as a list.  You will find these options under the widget option.
 
-The widget section will show dates with events in red and show events when hovering over date.
+The ability to add a large public calendar is now available by posting a page and adding "[[EventsCalendarLarge]]" to the page content to create a stand alone calendar page. Also, when entering an event from the admin section, you can check the box saying "Create Post for Event", which will cause a post to be created with the event information.
 
-<b>Supports iCal now.  You can add links to iCal at bottom of admin section.</b>
-This allows to add google calendars.
-There are some problems with recurring events.  I am working on this but reading the iCal is a chore. :)
+Additional features are being added regularly so make sure that you keep up to date on upcoming changes and new features by subscribing to the RSS feed - http://www.lukehowell.com/feed.
+
+== Installation ==
+
+1. Upload `events-calendar` folder to the `/wp-content/plugins/ directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Set options under Events Calendar/Options on the admin menu.
+
+	When updating you will need to deactivate and reactivate the plugin.
+	
+== Screenshots ==
+1. Events Calendar Admin
+2. Events Calendar Options
+3. Events Calendar Widget Options
+4. Events Calendar as Widget Calendar
+5. Events Calendar as Widget List
+6. Events Calendar as Large Calendar
 
 == Change Log ==
+
 <pre><code>
+Version 6.3.2
+  Change in time and date format. (Ron)
+  Added option to change length of day names in calendars (Ron)
+  Fixed bug for event list tooltip.
+Version 6.3.1
+  Fixed bug with using newlines in description of event
+  Fixed bug with file_get_contents
+  Added option to pick CSS formatting for the days with events in the widgets.
+Verison 6.3
+  Fixed major bug pointed out by Ron.  When month was changing, calendar was disappearing.  This is fixed.
+Version 6.2
+  Ron added css for high lighting the current day in large calendar.  This can be edited in the events-calendar.css file.  Id is #todayLarge
+  For widget calendar, if the theme style sheet provides style then the current date will be marked with theme styling.  If the theme does not contain this style then the current date will be with a red border.
+  Fixed bug of showing all events in thickbox regardless of visibility level.
+Version 6.1
+  Added Time Picker for time entries
+  Fixed some access level issues and clearing duplicate entries.
+  Took out COLLATE from database sql
+  Dates will not reset when plugin
+Version 6.0.12
+  Fixed type in time entry.
+Version 6.0.11
+  Fixed css not allowing day header to show in IE
+Version 6.0.10
+  Fixed edit form to make location to update.
+Version 6.0.9
+  Hopefully, fixed conflict with NextGEN Gallery.  Thanks, LUcky.
+  Fixed problem with quotes in text entries.
+Verison 6.0.8
+  Fixed some AJAX stuff for the calendar update messing with CSS.
+Version 6.0.7
+  Fixed some database entries for old versions.
+Version 6.0.6
+  Change str_ireplace to str_replace for use with php4
+Version 6.0.4
+  Added functionality for the visibility level of each event.
+  Changed the event list view to show events that have not ended yet, not only events that started before current day.
+Version 6.0.3
+  Dates now show in the events list view.
+Version 6.0.2
+  Fixed datbase problem, hopefully.
+Version 6.0.0
+  Calendar is formatted the same as wordpress calendar.  Widget will take theme settings.
+  Added Thickbox when day is clicked on.  Shows more event details.
+  Added ajax fuction for changing months.
+Version 5.8.3
+  Added feature to identify current day (Added by Diego)
+Version 5.8.2
+  Added option to choose the color of the text display when you hover over an event date.  Also rearranged the menu a little in the widget options.
 Version 5.8.1
   Fixed some alignment errors.
 Version 5.8.0
@@ -45,13 +110,11 @@ Version 5.5.10
 Version 5.5.9
   Added ability to show events from ical.  There is still some issue with irregular occurrances.  However, seems to work fine with DAILY, WEEKLY, MONTHLY, YEARLY standard reccurring events.
 Version 4.5.9
-  Bug Fix - Error cause by themes not containging <?php wp_footer();?>
-  
+  Bug Fix - Error cause by themes not containging <?php wp_footer();?>  
 Version 4.5.8
   Bug Fix - Fixed error caused by using single quotes.
   Added Spanish translation from Covi
   Changed events list format to show current days events as well as future.
-  
 Version 4.4.7
   Added ability for multiple languages, patch from Rauli Haverinen
   Added Finnish translation files from Rauli Haverinen
@@ -59,60 +122,33 @@ Version 3.4.6
   Just straightened some code.
 Version 3.4.5
   Code beautification
-
 Version 3.3.5
   Took out donate link as it is on my site now.
-
 Version 3.3.4
   Added fix from Kerwin Kanago to correct problem in php4 fix from Brett Minnie
-  
 Version 3.3.3
   Set color of text to black in hover box.  Fixed problem showing up with themes with light color text.
   Added option to choose minimum user level to edit event. (You must go to widget options and resave them or management page will not show up)
-
 Versino 2.3.2
   Bug Fix - Calendar wouldn't accept events with day having leading zero.  Converted string to int to fix.
-
 Version 2.2.2
   Bug Fix - Problem caused with redeclaring str_split
-
 Version 2.2.1
   Display Calendar as upcoming event list. (revision by Dan Coulter - http://www.dancoulter.com)
   Choose diplay format of Date and Time. (revision by Dan Coulter)
-
 Version 1.2.1
   Hide empty fields.  (suggestion by Dan Coulter)
   php4 fix.  (revision by Brett Minnie - http://www.fractalmetal.co.za)
-
 Version 1.1.1
   Bug Fix - Wordpress variabl clashing with events variable.  Fixed bug displaying archives.
-
 Version 1.1.0
   Title Option
   Day Name Length Option
-
 Version 1.0.0
   First release.
 </code></pre>
 
-== Installation ==
-1. Upload `events-calendar` folder to the `/wp-content/plugins/ directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-
-	When updating you will need to deactivate and reactivate the plugin.
-	Also, to be safe you should go to widget options and resave them.
-	
-	If you are wanting to use this as a K2 sidebar module you will have to upload a file to the K2 theme. The file is located in the plugin folder under the folder k2-module. This file inside must be uploaded to the k2 module folder. The directory is as follows: wp-content/themes/k2/app/modules
-
-	Once you add the widget to the sidebar you will be able to see the management page.
-
 == Frequently Asked Questions ==
 
-= Why does nothing happens when I hover over the event? =
-In the admin section under presentation you will see a tab that says theme editor.  If you click that it will bring you to a text editor for editing you theme.  On the right side of the page you will see a list of links.  Click on the link for the footer.  Make sure that some where in the file the following line appears:  "wp_footer();" (without the quotes).  If this line is not there the event information will not show up when you hover over the date.
-
-= Where do I add my events? =
-Under the "Manage" tab of the admin page, there is a "Calendar" subpage.  You can also click on the widget title on your sidebar and it will take you to the admin section for the calendar.
-
-= Is this plugin supported as a k2 module? =
-Yes, it is now supported with the k2 theme.
+= I use a theme with a dark background.  My events don't show well in the large calendar view. =
+in the css folder there is a file called events-calendar.css.  This file has the css for the calendar.  It is commented as Large Calendar.
