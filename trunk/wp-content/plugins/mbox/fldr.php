@@ -6,10 +6,12 @@
 	
 	$base = $_SERVER["DOCUMENT_ROOT"];
 	$path = $base.$p;
-	
+  $o = mBox_get_options(); 	
 	$scriptdir = trailingslashit(get_settings('siteurl')) . 'wp-content/plugins/mBox';
 
   $results = array();
+  
+  $limit = ($o['maximages'] != "" && $o['maximages'] > 0) ? $o['maximages'] : 0;
   
   $d = dir($path);
   while($file=$d->read()) {
@@ -31,20 +33,24 @@
 	  
 	  foreach ($results as $item ) {
 	    
-	    $img = $item['img'];
-	    $name = $item['name'];
-	    $desc = $item['desc'];
-      
-      if(file_exists($path . 'thumbs/' . $item['img'])) {   
-        $thumb = 'thumbs/' . $item['img']; 
-      } else {  
-        $thumb = '';
-      }
+	    if ($limit <= 0 || $id <= $limit) {
+	    
+        $img = $item['img'];
+        $name = $item['name'];
+        $desc = $item['desc'];
+        
+        if(file_exists($path . 'thumbs/' . $item['img'])) {   
+          $thumb = 'thumbs/' . $item['img']; 
+        } else {  
+          $thumb = '';
+        }
 
-      if ($id > 1) { $output .= ','; }
-      $output .= '{"id":"'.$id.'", "title":"'.htmlentities($name).'", "src":"'.$img.'", "thumb":"'.$thumb.'", "desc":"'.$desc.'"}';			 
+        if ($id > 1) { $output .= ','; }
+        $output .= '{"id":"'.$id.'", "title":"'.htmlentities($name).'", "src":"'.$img.'", "thumb":"'.$thumb.'", "desc":"'.$desc.'"}';			 
+        
+        $id = $id + 1;
       
-      $id = $id + 1;
+      }
 	    
 	  }
 	  

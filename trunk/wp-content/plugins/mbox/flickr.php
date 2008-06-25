@@ -11,6 +11,7 @@
   $api = $o['flickr_key'];
   $user = $o['flickr_user'];
   $tagmode = $o['flickr_tagsmode'];
+  $maximages = $o['maximages'];
   if ($user != "") {
     $user = '&user_id='.$user;
   }
@@ -19,8 +20,11 @@
   } else {
     $tagmode = '&tag_mode=any';
   }
+  if ($maximages != "" && $maximages > 0) {
+    $maximages = '&per_page='.$maximages;
+  }
   
-  $rss_url = 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' . $api . $user . $tags . $tagmode;
+  $rss_url = 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' . $api . $user . $tags . $tagmode . $maximages;
 
   $id = 1;
   $output = '{"previews":[';
@@ -53,7 +57,15 @@
     
   } else {                                             // PHP 4 [using MiniXML Class]
     require_once('minixml/minixml.inc.php');
-    $xml = file_get_contents($rss_url); 
+    
+    if( function_exists('curl_init') ) {               // cURL esta disponible      
+      $ch = curl_init($rss_url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $xml = curl_exec($ch);
+      curl_close($ch);
+    } else {
+      $xml = file_get_contents($rss_url);       
+    }    
     $parsed = new MiniXMLDoc();
     $parsed->fromString($xml);
     $root =& $parsed->getRoot();

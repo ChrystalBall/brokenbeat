@@ -17,9 +17,11 @@ mBox allows you to easy include slideshow galleries into Wordpress posts, pages 
     * Thumbnail navigation bar.
     * Pagination.
     * Enable / Disable slideshow presentation.
-    * Download image icon
-    * Load photos from flickr.
-    * Widget sidebar support [flickr mode only].
+    * Download image icon.
+    * Load photos from posts, flickr or folders.
+    * Widget sidebar support.
+    * Theme support.
+    * Zoom option using Slimbox.
     
 mBox uses mootools javascript framework and it had been tested on Firefox 2.x, Safari and Internet Explorer 7.    
 
@@ -53,7 +55,7 @@ mBox uses mootools javascript framework and it had been tested on Firefox 2.x, S
 
     * Activate the mBox widget with drag'n'drop over the slidebar.
     * Click on Configure button.
-    * Set title, flickr tags [comma separated], width, height and autostart slideshow options.
+    * Set title, width, height and autostart slideshow options. Select a mode and fill the requiered input for each one: flickr tags [comma separated], folder path or wordpress post ID.
     * Save.
 
 
@@ -69,6 +71,10 @@ Click on that tab to set the default options:
     * Show Quicktag: Enable a new button in the post/page editor [if you are using the default set].
     * Autostart slideshow: begin slideshow automatically.
     * Default Widht/Height: Default size values of the slideshow div [also max. image size].
+    * Help: Text included after the gallery block.
+    * Alert: Text to show if images load fails.
+    * Max. Numer of Images: Limits the number of images in the galleries.
+    * Sort Images: Defines how images will be ordenated.
     * Mootools Components: If you are already using mootools framework in your theme, you can try to load only the required components.
                            Other case, check to 'yes' all of them.
 
