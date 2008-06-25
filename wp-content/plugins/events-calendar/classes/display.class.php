@@ -197,7 +197,7 @@ class Display_071181 {
         foreach($results as $r)
         {
           //$inards .= "<span style=\'font-size:10px;color:black;\'><span style=\'font-weight:bold\'>".__('Title','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eTitle']))."<br />";
-          $inardsNoStyle .= "<span class=\'eventPopupText'><span class=\'eventPopupTitle\'>".__('Title','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eTitle']))."<br />";
+          $inardsNoStyle .= "<span class=\'eventPopupText\'><span class=\'eventPopupTitle\'>".__('Title','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eTitle']))."<br />";
           //if ( !empty($r['eDescription']) ) $inards .= "<span style=\'font-weight:bold\'>".__('Description','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eDescription']))."<br />";
           if ( !empty($r['eDescription']) ) $inardsNoStyle .= "<span class=\'eventPopupTitle\'>".__('Description','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eDescription']))."<br />";
           //if ( !empty($r['eLocation']) ) $inards .= "<span style=\'font-weight:bold\'>".__('Location','events-calendar').": </span>".ereg_replace("[\r\n]", " ", stripslashes($r['eLocation']))."<br />";
