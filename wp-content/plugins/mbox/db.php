@@ -3,6 +3,7 @@
   require(dirname(__FILE__).'/../../../' .'wp-config.php');
 
   global $table_prefix;
+  $o = mBox_get_options(); 
   
   $connexion = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Can't connect.<br />".mysql_error());
   $dbconnexion = mysql_select_db(DB_NAME, $connexion);	
@@ -13,6 +14,8 @@
 	}
 	
 	$id = $_GET["id"];
+	$order = ($o['sort_column'] == '') ? 'title ASC' : $o['sort_column'].' '.$o['sort_order'];
+	$limit = ($o['maximages'] != "" && $o['maximages'] > 0) ? 'LIMIT '.$o['maximages'] : '';
 
 	$scriptdir = trailingslashit(get_settings('siteurl')) . 'wp-content/plugins/mBox';
 	
@@ -21,7 +24,9 @@
 	     . " WHERE p.post_parent = '".$id."' "
 	     . "   AND p.post_status IN ('inherit') "
 	     . "   AND p.post_mime_type LIKE 'image/%' "
-	     . "   AND m.meta_key = '_wp_attached_file' ";
+	     . "   AND m.meta_key = '_wp_attached_file' "
+	     . " ORDER BY p.post_".$order." "
+	     . " ".$limit;
 
 	$results = mysql_query($sql);
 	
@@ -50,7 +55,7 @@
       }
 
       if ($id > 1) { $output .= ','; }
-      $output .= '{"id":"'.$id.'", "title":"'.htmlentities($name).'", "src":"'.$img.'", "thumb":"'.$thumb.'", "desc":"'.$desc.'"}';			 
+      $output .= '{"id":"'.$id.'", "title":"'.htmlentities($name).'", "src":"'.$img.'", "thumb":"'.$thumb.'", "desc":"'.htmlentities($desc).'"}';			 
       
       $id = $id + 1;
 	    

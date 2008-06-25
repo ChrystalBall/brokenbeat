@@ -1,8 +1,8 @@
 /*********************************************************************************
 
   Script    : mBox
-  Version   : 1.2.2
-  Updated   : 03/11/2008
+  Version   : 1.2.5
+  Updated   : 03/28/2008
   Author    : Marcos Esperón <Hanok>, <hanokmail[at]gmail.com>
   Web       : <http://www.hnkweb.com>
   Desc      : Generate a slideshow based on JSon collection.
@@ -41,7 +41,8 @@ var mBox = new Class({
   options: {
     mode: 'w',
     showthumbs: true,
-    downicon: true,
+    download: true,
+    zoom: false,
     width: 600,
     height: 450,		
     help: '',
@@ -62,8 +63,12 @@ var mBox = new Class({
     this.options.height = this.options.height.toInt();
     if (this.options.autostart == "true") {
       this.options.autostart = true;
-    } else {
-      this.options.autostart = false;
+    };
+    if (this.options.download == "false") {
+      this.options.download = false;
+    };
+    if (this.options.zoom == "true") {
+      this.options.zoom = true;
     };
 
     this.box.setStyles({'width': this.options.width+'px', 'height': this.options.height+24+'px'});
@@ -75,15 +80,15 @@ var mBox = new Class({
 
     if (this.options.help != '') {
       var help = new Element('p', {'id': 'mbox-help-'+this.options.id, 'class': 'mbox-help'}).setHTML(this.options.help).injectAfter(this.box);
-    };
+    };    
 
   },
 
   loading: function() {
   
     this.box.empty();
-    var loading = new Element('img', {'src': this.options.urlbase+'/img/loading.gif', 'alt': 'Cargando...', 'style': 'display:block; margin:100px auto;'});
-    loading.inject(this.box);
+    var load = new Element('div', {'class': 'mbox-load'});
+    load.inject(this.box);
     
   },
 	
@@ -165,8 +170,11 @@ var mBox = new Class({
       var capt = new Element('p', {'id': 'mbox-capt-'+this.options.id, 'class': 'mbox-capt'}).setHTML('').injectInside(info);
       var desc = new Element('p', {'id': 'mbox-desc-'+this.options.id, 'class': 'mbox-desc'}).setHTML('').injectInside(info);
 
-      if (this.options.downicon) {
+      if (this.options.download) {
         var down = new Element('a', {'id': 'mbox-down-'+this.options.id, 'class': 'mbox-down'}).injectInside(info);
+      };
+      if (this.options.zoom) {
+        var zoom = new Element('a', {'id': 'mbox-zoom-'+this.options.id, 'class': 'mbox-zoom'}).injectInside(info);
       };                
        
       this.setevents();      
@@ -232,11 +240,19 @@ var mBox = new Class({
       }.bind(this));
     }.bind(this)); 
 
-    if (this.options.downicon) {
+    if (this.options.download) {
       $('mbox-down-'+this.options.id).addEvent("click", function(e) {
         window.open(this.href);
         new Event(e).stop();
       });
+    };
+    
+    if (this.options.zoom) {
+      $('mbox-zoom-'+this.options.id).addEvent("click", function(e) {        
+        this.stopslide();
+        Lightbox.show($('mbox-zoom-'+this.options.id).href, '');
+        new Event(e).stop();
+      }.bind(this));
     };
 
     document.addEvent('keydown', function(event){
@@ -297,7 +313,7 @@ var mBox = new Class({
     $('mbox-foto-'+this.options.id).src = null;
     wCur = $('mbox-fcon-'+this.options.id).getStyle('width').toInt();
     hCur = $('mbox-fcon-'+this.options.id).getStyle('height').toInt();
-    $('mbox-fcon-'+this.options.id).setStyles({'background-image': 'url('+this.options.urlbase+'/img/loading.gif)'});
+    //$('mbox-fcon-'+this.options.id).setStyles({'background-image': 'url('+this.options.loadimg+')'});
     $('mbox-foto-'+this.options.id).setStyles({opacity: 0, display: 'none'});
     $('mbox-capt-'+this.options.id).setStyles({opacity: 0});
     $('mbox-desc-'+this.options.id).setStyles({opacity: 0});
@@ -321,7 +337,8 @@ var mBox = new Class({
       $('mbox-foto-'+this.options.id).setStyles({'margin-top': 0});
     };
 
-    if (this.options.downicon) { $('mbox-down-'+this.options.id).href = this.current.src; };
+    if (this.options.download) { $('mbox-down-'+this.options.id).href = this.current.src; };
+    if (this.options.zoom) { $('mbox-zoom-'+this.options.id).href = this.current.src; };
     $('mbox-capt-'+this.options.id).setHTML('<strong>'+(this.current.value)+'/'+this.colection.length+'</strong>&nbsp;|&nbsp;'+this.current.title);
 
     if (this.options.mode == "f") {
@@ -340,7 +357,7 @@ var mBox = new Class({
     $('mbox-foto-'+this.options.id).effect('opacity').custom(0,1).chain(function(){
     $('mbox-capt-'+this.options.id).effect('opacity').custom(0,1).chain(function(){
     $('mbox-desc-'+this.options.id).effect('opacity').custom(0,1);
-    $('mbox-fcon-'+this.options.id).setStyles({'background-image': 'none'});
+    //$('mbox-fcon-'+this.options.id).setStyles({'background-image': 'none'});
     }.bind(this));
     }.bind(this));
     
@@ -349,13 +366,9 @@ var mBox = new Class({
   toggleshow: function(){
   
     if(this.slideshow){
-      this.stopslide();
-      $('mbox-slid-'+this.options.id).setHTML('Activar');
-      $('mbox-slid-'+this.options.id).setStyles({'background-position': '0px 0px'});
+      this.stopslide();      
     } else {
-      this.startslide();
-      $('mbox-slid-'+this.options.id).setHTML('Parar');
-      $('mbox-slid-'+this.options.id).setStyles({'background-position': '0px -16px'});
+      this.startslide();      
     };
   
   },
@@ -365,6 +378,8 @@ var mBox = new Class({
     $('mbox-capt-'+this.options.id).setHTML('Iniciando la presentacion...');
     this.nextImg();
     this.slideshow = (function(){ this.nextImg(); }).bind(this).periodical(this.options.timer);
+    $('mbox-slid-'+this.options.id).setHTML('Parar');
+    $('mbox-slid-'+this.options.id).setStyles({'background-position': '0px -16px'});
   
   },
 
@@ -372,6 +387,8 @@ var mBox = new Class({
   
     $clear(this.slideshow);
     this.slideshow = null;
+    $('mbox-slid-'+this.options.id).setHTML('Activar');
+    $('mbox-slid-'+this.options.id).setStyles({'background-position': '0px 0px'});
   
   },
 	
