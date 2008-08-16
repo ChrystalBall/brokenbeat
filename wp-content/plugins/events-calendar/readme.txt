@@ -2,11 +2,11 @@
 
 Contributors: snumb130, bbodine1, ronbme
 Donate link: http://www.lukehowell.com/donate
-Version: 6.3.2
+Version: 6.4
 Tags: widget, admin, sidebar, plugin, javascript, date, time, calendar, thickbox, jquery, tooltip, ajax
 Requires at least: 2.5
 Tested up to: 2.5.1
-Stable tag: 6.3.2
+Stable tag: 6.4
 
 Events-Calendar is a diverse replacement for the original calendar included with WordPress adding many useful functions to keep track of your events. The plugin has an easy to use admin section that displays a big readable calendar and lets you add and delete events. The plugin is widget ready so you can easily add a small calendar to the main sidebar with the ability to roll over the highlighted event day to see a brief description of the event or click the day to get a full description of the event without ever leaving your current page. If you are not using a widget ready theme, you can still have the calendar on your sidebar.  Simply place "<?php sidebarEventsCalendar();?>" in the sidebar file. The widget can also show a specified number of events as a list.  You will find these options under the widget option.
 
@@ -37,6 +37,9 @@ Additional features are being added regularly so make sure that you keep up to d
 == Change Log ==
 
 <pre><code>
+Versionm 6.4
+  Added fix for file_get_contents by Ian72.
+  Added localization by Heirem.  Also added French language files.
 Version 6.3.2
   Change in time and date format. (Ron)
   Added option to change length of day names in calendars (Ron)

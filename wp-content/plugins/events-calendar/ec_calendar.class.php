@@ -101,8 +101,10 @@ class EC_Calendar {
 	  list($month, $year, $month_name, $weekday) = explode(',',gmstrftime('%m,%Y,%B,%w',$first_of_month));
 	  $weekday = ($weekday + 7 - $first_day) % 7; //adjust for $first_day
 	  $title   = htmlentities(ucfirst($month_name))."&nbsp;".$year;
-	  $previousMonth = date('F', mktime(0, 0, 0, $month-1, 1, $year));
-	  $nextMonth = date('F', mktime(0, 0, 0, $month+1, 1, $year));
+		/*-- Updated by Heirem ---------------- */
+		// $previousMonth = date('F', mktime(0, 0, 0, $month-1, 1, $year));
+	  // $nextMonth = date('F', mktime(0, 0, 0, $month+1, 1, $year));
+		/*---------------------------------------------------- */
 	  $calendar = "<div id=\"calendar_wrapLarge\"><h2 style=\"text-align:center;\"><span id=\"EC_previousMonthLarge\"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"EC_nextMonthLarge\"></span></h2><br />";
 
     $calendar .= "<table id=\"wp-calendarLarge\">\n\t<thead>\n\t<tr>\n";
@@ -133,10 +135,10 @@ class EC_Calendar {
 	  echo "</div>";
 	}
 
-	  /**
+		/**
 	   * Displays the Admin Calendar
 	   */
-	  function displayAdmin($year, $month, $days = array(), $day_name_length = 7) {
+function displayAdmin($year, $month, $days = array(), $day_name_length = 7) {
     $first_day = get_option('start_of_week');
     $first_of_month = gmmktime(0,0,0,$month,1,$year);
 
@@ -147,9 +149,13 @@ class EC_Calendar {
 	  list($month, $year, $month_name, $weekday) = explode(',',gmstrftime('%m,%Y,%B,%w',$first_of_month));
 	  $weekday = ($weekday + 7 - $first_day) % 7; //adjust for $first_day
 	  $title   = htmlentities(ucfirst($month_name))."&nbsp;".$year;
-	  $previousMonth = date('F', mktime(0, 0, 0, $month-1, 1, $year));
-	  $nextMonth = date('F', mktime(0, 0, 0, $month+1, 1, $year));
-	  $calendar = "<h2 style=\"text-align:center;\"><a href=\"?page=events-calendar&EC_action=switchMonthAdmin&EC_month=" . ($month-1) . "&EC_year=" . ($year) . "\">&laquo;" . $previousMonth . "</a>  Events Calendar ($title)  <a href=\"?page=events-calendar&EC_action=switchMonthAdmin&EC_month=" . ($month+1) . "&EC_year=" . ($year) . "\">" . $nextMonth . "&raquo;</a></h2><hr />";
+		/*-- Added for localisation by Heirem ---------------- */
+		$previousMonth = strftime('%b', mktime(0, 0, 0, $month-1, 1, $year));
+		// $previousMonth = date('F', mktime(0, 0, 0, $month-1, 1, $year));
+		$nextMonth = strftime('%b', mktime(0, 0, 0, $month+1, 1, $year));
+	  // $nextMonth = date('F', mktime(0, 0, 0, $month+1, 1, $year));
+		/*---------------------------------------------------- */
+		$calendar = "<h2 style=\"text-align:center;\"><a href=\"?page=events-calendar&EC_action=switchMonthAdmin&EC_month=" . ($month-1) . "&EC_year=" . ($year) . "\">&laquo; " . $previousMonth . "</a>  " . __('Events','events-calendar') ." ($title)  <a href=\"?page=events-calendar&EC_action=switchMonthAdmin&EC_month=" . ($month+1) . "&EC_year=" . ($year) . "\">" . $nextMonth ." &raquo;</a></h2><hr />";
 
     $calendar .= "<table id=\"wp-calendar\">\n\t<thead>\n\t<tr>\n";
 

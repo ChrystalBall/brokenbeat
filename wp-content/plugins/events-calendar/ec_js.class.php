@@ -35,8 +35,11 @@ class EC_JS {
     }
     endforeach;
     $output .= "</ul>";
+    /*-- Added for localisation by Heirem ---------------- **/
+    $clickdate = __('Click date for more details','events-calendar');
     if($output != '<ul></ul>'):
-    $output .= "<span style=\"font-size:10px;font-weight:normal;\">Click date for more details.</span>";
+    $output .= "<span style=\"font-size:10px;font-weight:normal;\">$clickdate.</span>";
+    /*---------------------------------------------------- **/
 ?>
     <script type="text/javascript">
       tb_pathToImage = "<?php echo get_option('siteurl');?>/wp-includes/js/thickbox/loadingAnimation.gif";
@@ -49,7 +52,10 @@ class EC_JS {
             $(this).css('cursor', 'pointer');
           });
           $('#events-calendar-<?php echo $d;?>').click(function() {
-            tb_show("<?php echo date('l, F j, Y', mktime(0,0,0,$m,$d,$y));?>", "<?php echo get_option('siteurl');?>?EC_view=day&EC_month=<?php echo $m;?>&EC_day=<?php echo $d;?>&EC_year=<?php echo $y;?>&TB_iframe=true&width=200&height=200", false);
+            <!-- Added for localisation by Heirem ----- -->
+            <!-- tb_show("<?php echo date('l, F j, Y', mktime(0,0,0,$m,$d,$y));?>", "<?php echo get_option('siteurl');?>?EC_view=day&EC_month=<?php echo $m;?>&EC_day=<?php echo $d;?>&EC_year=<?php echo $y;?>&TB_iframe=true&width=200&height=200", false); -->
+            tb_show("<?php echo strftime('%A, %d %B, %Y', mktime(0,0,0,$m,$d,$y));?>", "<?php echo get_option('siteurl');?>?EC_view=day&EC_month=<?php echo $m;?>&EC_day=<?php echo $d;?>&EC_year=<?php echo $y;?>&TB_iframe=true&width=200&height=200", false);
+            <!------------------------------------------ -->
           });
           $('#events-calendar-<?php echo $d;?>').Tooltip({
             delay:0,
@@ -65,8 +71,12 @@ class EC_JS {
     <script type="text/javascript">
       jQuery(function($) {
         $(document).ready(function() {
-          $('#EC_previousMonth').append("&laquo;<?php echo date('M', mktime(0, 0, 0, $m-1, 1, $y));?>");
-          $('#EC_nextMonth').prepend("<?php echo date('M', mktime(0, 0, 0, $m+1, 1, $y));?>&raquo;");
+          /*-- Added for localisation by Heirem ---------------- */
+          $('#EC_previousMonth').append("&laquo;<?php echo strftime('%b', mktime(0, 0, 0, $m-1, 1, $y));?>");
+          // $('#EC_previousMonth').append("&laquo;<?php echo date('M', mktime(0, 0, 0, $m-1, 1, $y));?>");
+          $('#EC_nextMonth').prepend("<?php echo strftime('%b', mktime(0, 0, 0, $m+1, 1, $y));?>&raquo;");
+          // $('#EC_nextMonth').prepend("<?php echo date('M', mktime(0, 0, 0, $m+1, 1, $y));?>&raquo;");
+          /*---------------------------------------------------- */
           $('#EC_previousMonth').mouseover(function() {
             $(this).css('cursor', 'pointer');
           });
@@ -179,8 +189,12 @@ class EC_JS {
     <script type="text/javascript">
       jQuery(function($) {
         $(document).ready(function() {
-          $('#EC_previousMonthLarge').append("&laquo;<?php echo date('M', mktime(0, 0, 0, $m-1, 1, $y));?>");
-          $('#EC_nextMonthLarge').prepend("<?php echo date('M', mktime(0, 0, 0, $m+1, 1, $y));?>&raquo;");
+          /*-- Added for localisation by Heirem ---------------- */
+          $('#EC_previousMonthLarge').append("&laquo;<?php echo strftime('%B', mktime(0, 0, 0, $m-1, 1, $y));?>");
+          // $('#EC_previousMonthLarge').append("&laquo;<?php echo date('M', mktime(0, 0, 0, $m-1, 1, $y));?>");
+          $('#EC_nextMonthLarge').prepend("<?php echo strftime('%B', mktime(0, 0, 0, $m+1, 1, $y));?>&raquo;");
+          //$('#EC_nextMonthLarge').prepend("<?php echo date('M', mktime(0, 0, 0, $m+1, 1, $y));?>&raquo;");
+          /*---------------------------------------------------- */
           $('#EC_previousMonthLarge').mouseover(function() {
             $(this).css('cursor', 'pointer');
           });

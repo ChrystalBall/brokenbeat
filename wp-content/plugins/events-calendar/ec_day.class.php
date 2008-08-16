@@ -65,7 +65,9 @@ class EC_Day {
 <?php
       if(!empty($location) || !is_null($location)):
 ?>
-      <div for="EC_location" class="EC_location"><strong>Location:</strong> <?php echo $location;?></div>
+      <!-- Added for localisation by Heirem ---------------- -->
+      <div for="EC_location" class="EC_location"><strong><?php _e('Location','events-calendar'); ?>:</strong> <?php echo $location;?></div>
+      <!-- ------------------------------------------------- -->
 <?php
       endif;
 
@@ -76,9 +78,11 @@ class EC_Day {
       endif;
 
       if(!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime)):
+      /* Added for localisation by Heirem --------------------*/
 ?>
-       to <strong><?php echo $endTime;?></strong>
+       <?php _e('to','events-calendar');?> <strong><?php echo $endTime;?></strong>
 <?php
+      /* -----------------------------------------------------*/
       endif;
 
       if(!empty($startTime) || !is_null($startTime)):
