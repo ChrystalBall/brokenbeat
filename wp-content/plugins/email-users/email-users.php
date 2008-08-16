@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Email Users
-Version: 3.1.3
+Version: 3.1.4
 Plugin URI: http://email-users.vincentprat.info
 Description: Allows the site editors to send an e-mail to the blog users. Credits to <a href="http://www.catalinionescu.com">Catalin Ionescu</a> who gave me some ideas for the plugin and has made a similar plugin. Bug reports and corrections by Cyril Crua and Pokey.
 Author: Vincent Prat (email : vpratfr@yahoo.fr)
@@ -26,7 +26,7 @@ Author URI: http://www.vincentprat.info
 */
 
 // Version of the plugin
-define( 'MAILUSERS_CURRENT_VERSION', '3.1.3' );
+define( 'MAILUSERS_CURRENT_VERSION', '3.1.4' );
 
 // i18n plugin domain
 define( 'MAILUSERS_I18N_DOMAIN', 'email-users' );
