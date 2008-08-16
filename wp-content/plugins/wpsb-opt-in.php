@@ -3,7 +3,7 @@
 Plugin Name: Wordpress Newsletter subscription Opt-in for SendBlaster
 Plugin URI: http://www.sendblaster.com/wordpress-newsletter-double-optin-widget/
 Description: Create a simple form to collect subscription requests to newsletter software managed mailing lists. User input is stored in the db and sent by e-mail in a format compatible with common newsletter softwares' data structure and subscription management.
-Version: 1.1.1
+Version: 1.1.5
 Author: Max
 Author URI: http://www.sendblaster.com/
 */
@@ -30,23 +30,39 @@ $wpsb_db_version = "0.1";
 
 
 function wpsb_show_form($rtn = 0) {	
-	$out = '<form action="#wpsbw" method="post">' . "\n";
-	$out .= '<p>' . get_option('wpsb_form_email');
-	$out .= '<br/> <input type="text" name="wpsb_email" id="wpsb_email" /></p>' . "\n";
 	$wpsb_flds = (get_option('wpsb_form_fields'));
 	$add_link_lv = get_option("wpsb_link_love");
+	$out = '<form action="#wpsbw" method="post">' . "\n";
+	$out .= '<p class="wpsb_form_label">' . get_option('wpsb_form_email');
+	$out .= '<br/> <input type="text" name="wpsb_email" id="wpsb_email" class="wpsb_form_txt" /></p>' . "\n";
+	
+	$out .= '<script language="Javascript">
+		function wpsb_toggle_custom_fields (state) {
+			for (i=2; i<16; i++) {
+				if (obj = document.getElementById(\'wpsb_fld_\'+i)) {
+					obj.disabled = !state;
+					obj.readOnly = !state;
+				}
+			}
+		}
+	</script>
+	';
+	$out .= '<p class="wpsb_form_label"><input type="radio" name="wpsb_radio_option" id="wpsb_radio_option1" onClick="wpsb_toggle_custom_fields(1)" class="wpsb_form_radio" value="wpsb_radio_in" checked /> '.$wpsb_flds['wpsb_radio_in'];
+	$out .= '<br/>';
+	$out .= '<input type="radio" name="wpsb_radio_option" id="wpsb_radio_option2" onClick="wpsb_toggle_custom_fields(0)" class="wpsb_form_radio" value="wpsb_radio_out" /> '.$wpsb_flds['wpsb_radio_out'].'</p>';
+	
 	if (is_array($wpsb_flds)) {
 		foreach ($wpsb_flds as $wpsb_k => $wpsb_v) {
-			if ($wpsb_v) {
-				$out .= '<p>' . $wpsb_v;
-				$out .= ' <input type="text" name="wpsb_fld['. $wpsb_k .']" id="wpsb_fld_'. $wpsb_k .'"  maxlength="64" /></p>' . "\n";
+			if (is_numeric($wpsb_k) && $wpsb_v) {
+				$out .= '<p class="wpsb_form_label">' . $wpsb_v;
+				$out .= ' <input type="text" name="wpsb_fld['. $wpsb_k .']" id="wpsb_fld_'. $wpsb_k .'"  maxlength="64" class="wpsb_form_txt" /></p>' . "\n";
 			}
 		}
 	}
-	$out .= '<p><input type="submit" value="' . get_option('wpsb_form_send');
-	$out .= '" /></p>' . "\n</form>\n<!-- Made by www.Sendblaster.com Newsletter Software Opt-in -->\n";
+	$out .= '<p class="wpsb_form_label"><input type="submit" value="' . get_option('wpsb_form_send');
+	$out .= '" class="wpsb_form_btn" /></p>' . "\n</form>\n<!-- Made by www.Sendblaster.com Newsletter Software Opt-in -->\n";
 	if ($add_link_lv) {
-		$out .= "Get this <a href=\"http://www.sendblaster.com/wordpress-newsletter-double-optin-widget/\" title=\"Wordpress double optin formail widget\">wordpress double optin email widget</a> for <a href=\"http://www.sendblaster.com/newsletter-software-no-recurring-fees/\" title=\"newsletter software\">Newsletter software</a>";
+		$out .= "Get this <a href=\"http://www.sendblaster.com/wordpress-newsletter-double-optin-widget/\" title=\"Wordpress newsletter plugin\">Mailing list widget</a><br/> for <a href=\"http://www.sendblaster.com\" title=\"bulk email software and mass email sender program\">bulk email software</a>";
 	}
 	if ($rtn) {
 		return $out;
@@ -104,70 +120,85 @@ function wpsb_opt_in() {
 	else {
 		$email = stripslashes($_POST['wpsb_email']);
 		$wpsb_custom_flds = "";
-		$wpsb_double_optin = get_option('wpsb_double_optin');
-		$wpsb_auto_delete = get_option('wpsb_auto_delete');
-		if (!empty($_POST['wpsb_fld'])) {
-			foreach ($_POST['wpsb_fld'] as $wpsb_k => $wpsb_v) {
-				if (ereg("^[ ]*([^\t\r\n\\]{1,64}[^ ])[ ]*$", stripslashes($wpsb_v), $wpsb_r)) {
-					$wpsb_custom_flds .= "#".$wpsb_k."#: ".$wpsb_r[1]."\n";
-				}
-			}
-		}
-		$email_from = stripslashes(get_option('wpsb_email_from'));
-		$subject = stripslashes(get_option('wpsb_email_subject'));
-		$message = stripslashes(get_option('wpsb_email_message'));
-		
-		$headers = "MIME-Version: 1.0\n";
-		$headers .= "From: $email_from\n";
-		$headers .= "Content-Type: text/plain; charset=\"" . get_settings('blog_charset') . "\"\n";
-
 		if (!preg_match("/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/", $email)) {
-			echo stripslashes(get_option('wpsb_msg_bad'));
-			wpsb_show_form();
+				echo stripslashes(get_option('wpsb_msg_bad'));
+				wpsb_show_form();
 		}
 		else {
-			$wpsb_time = time();
-			$wpsb_ip = wpsb_getip();
-			if ($wpsb_double_optin == 1) {
-				$wpsb_link = Array ("scheme" => "http", "host" => $_SERVER['HTTP_HOST'], "port" => "", "user" => "", "pass" => "", "path" => "", "query" => "", "fragment" => "");
-				$wpsb_link += parse_url(get_bloginfo('wpurl'));
-				$wpsb_optin_url = $wpsb_link['scheme']."://".$wpsb_link['host'].$_SERVER['SCRIPT_NAME']."?wpsb_d=".$wpsb_time."&wpsb_s=".md5($email.$wpsb_ip)."#wpsbw";
-				$message = str_replace('#link#', $wpsb_optin_url, $message);
-			}
-			$selectqry = "SELECT * FROM " . $table_users . " WHERE `email` = '" . $email ."'";
-			if ($wpdb->query($selectqry)) {
-				echo stripslashes(get_option('wpsb_msg_dbl'));
-			}
-			else {
-				if (mail($email,$subject,$message,$headers)) {
-					if ($wpsb_double_optin || !$wpsb_auto_delete) {
-						// Write new user to database
-						$insert = "INSERT INTO " . $table_users . " 
-							(time, ip, email, msg_sent, custom_data) 
-							VALUES (
-							'" . $wpsb_time . "',
-							'" . $wpsb_ip . "',
-							'" . $email . "',
-							'" . (int) !$wpsb_double_optin ."',
-							'" . $wpsb_custom_flds . "'
-							)";
-					 	$result = $wpdb->query($insert);
-					}
-					if (!$wpsb_double_optin) {
-						$headers = "MIME-Version: 1.0\n";
-						$headers .= "From: $email\n";
-						$headers .= "Content-Type: text/plain; charset=\"" . get_settings('blog_charset') . "\"\n";
-						mail($email_from, "Subscribe", $wpsb_custom_flds, $headers);
-					}
-					echo stripslashes(get_option('wpsb_msg_sent'));
+			if ($_POST['wpsb_radio_option'] && $_POST['wpsb_radio_option'] == "wpsb_radio_out") {
+				$manager_email = stripslashes(get_option('wpsb_email_from'));
+				$wpsb_flds = (get_option('wpsb_form_fields'));
+				$headers = "MIME-Version: 1.0\n";
+				$headers .= "From: $email\n";
+				$headers .= "Content-Type: text/plain; charset=\"" . get_settings('blog_charset') . "\"\n";
+				if (mail($manager_email, "Unsubscribe", "", $headers)) {
+					echo stripslashes($wpsb_flds['wpsb_unsubscr_success']);
 				} 
 				else {
 					echo stripslashes(get_option('wpsb_msg_fail'));
 				}
 			}
+			else {
+				$wpsb_double_optin = get_option('wpsb_double_optin');
+				$wpsb_auto_delete = get_option('wpsb_auto_delete');
+				if (!empty($_POST['wpsb_fld'])) {
+					foreach ($_POST['wpsb_fld'] as $wpsb_k => $wpsb_v) {
+						if (ereg("^[ ]*([^\t\r\n\\]{1,64}[^ ])[ ]*$", stripslashes($wpsb_v), $wpsb_r)) {
+							$wpsb_custom_flds .= "#".$wpsb_k."#: ".$wpsb_r[1]."\n";
+						}
+					}
+				}
+				$email_from = stripslashes(get_option('wpsb_email_from'));
+				$subject = stripslashes(get_option('wpsb_email_subject'));
+				$message = stripslashes(get_option('wpsb_email_message'));
+				
+				$headers = "MIME-Version: 1.0\n";
+				$headers .= "From: $email_from\n";
+				$headers .= "Content-Type: text/plain; charset=\"" . get_settings('blog_charset') . "\"\n";
+		
+				$wpsb_time = time();
+				$wpsb_ip = wpsb_getip();
+				if ($wpsb_double_optin == 1) {
+					$wpsb_link = Array ("scheme" => "http", "host" => $_SERVER['HTTP_HOST'], "port" => "", "user" => "", "pass" => "", "path" => "", "query" => "", "fragment" => "");
+					$wpsb_link += parse_url(get_bloginfo('wpurl'));
+					$wpsb_optin_url = $wpsb_link['scheme']."://".$wpsb_link['host'].$_SERVER['SCRIPT_NAME']."?wpsb_d=".$wpsb_time."&wpsb_s=".md5($email.$wpsb_ip)."#wpsbw";
+					$message = str_replace('#link#', $wpsb_optin_url, $message);
+				}
+				$selectqry = "SELECT * FROM " . $table_users . " WHERE `email` = '" . $email ."'";
+				if ($wpdb->query($selectqry)) {
+					echo stripslashes(get_option('wpsb_msg_dbl'));
+				}
+				else {
+					if (mail($email,$subject,$message,$headers)) {
+						if ($wpsb_double_optin || !$wpsb_auto_delete) {
+							// Write new user to database
+							$insert = "INSERT INTO " . $table_users . " 
+								(time, ip, email, msg_sent, custom_data) 
+								VALUES (
+								'" . $wpsb_time . "',
+								'" . $wpsb_ip . "',
+								'" . $email . "',
+								'" . (int) !$wpsb_double_optin ."',
+								'" . $wpsb_custom_flds . "'
+								)";
+						 	$result = $wpdb->query($insert);
+						}
+						if (!$wpsb_double_optin) {
+							$headers = "MIME-Version: 1.0\n";
+							$headers .= "From: $email\n";
+							$headers .= "Content-Type: text/plain; charset=\"" . get_settings('blog_charset') . "\"\n";
+							mail($email_from, "Subscribe", $wpsb_custom_flds, $headers);
+						}
+						echo stripslashes(get_option('wpsb_msg_sent'));
+					} 
+					else {
+						echo stripslashes(get_option('wpsb_msg_fail'));
+					}
+				}
+			}
 		}
 	}
-	echo '</div>' . "\n";
+	echo stripslashes(get_option('wpsb_form_footer'));
 }
 
 function wpsb_dbl_optin_confirm() {
@@ -251,7 +282,8 @@ function wpsb_install() {
 		add_option('wpsb_form_header', "<a name=\"wpsbw\"></a><div class=\"widget module\">You may want to put some text here");
 		add_option('wpsb_form_footer', "</div>");
 		add_option('wpsb_form_email', "E-mail:");
-		add_option('wpsb_form_fields', "");
+		//add_option('wpsb_form_fields', "");
+		add_option('wpsb_form_fields', array("wpsb_radio_in"=>"Subscribe","wpsb_radio_out"=>"Unsubscribe"));
 		add_option('wpsb_form_send', "Submit");
 	}
 }
@@ -273,6 +305,43 @@ function wpsb_options() {
 		echo '<div id="message" class="updated fade"><p><strong>';
 		_e('User deleted.', 'wpsb_domain');
 		echo '</strong></p></div>';
+	}
+	
+	if (isset($_GET['purge'])) {
+		$goOn = false;
+		switch (intval($_GET['purge'])) {
+			case 1:
+				// all
+				$to_del = "1";
+				$goOn = true;
+				break;
+			case 2:
+				// older than 1 week
+				$to_del = "`time` < " . strtotime("-1 week");
+				$goOn = true;
+				break;
+			case 3:
+				// older than 2 weeks
+				$to_del = "`time` < " . strtotime("-2 weeks");
+				$goOn = true;
+				break;
+			case 4:
+				// older than 1 month
+				$to_del = "`time` < " . strtotime("-1 month");
+				$goOn = true;
+				break;
+		}
+		if ($goOn) {
+			// Delete user from database
+			$delete = "DELETE FROM `" . $table_users .
+					"` WHERE " . $to_del . " AND `msg_sent` = '0'";
+			$result = $wpdb->query($delete);
+	
+			// Notify admin of delete
+			echo '<div id="message" class="updated fade"><p><strong>';
+			_e($result .' user(s) deleted.', 'wpsb_domain');
+			echo '</strong></p></div>';
+		}
 	}
 
 	// Get current options from database
@@ -357,8 +426,8 @@ function wpsb_options() {
             <input type="text" name="wpsb_email_from" id="wpsb_email_from" value="<?php echo $email_from; ?>" size="40">
           </p>
           <p><em>Note for <a href="http://www.sendblaster.com" title="Free newsletter software">SendBlaster</a> 
-            users</em>: this is the only parameter you have to insert inside SendBlaster 
-            <a href="http://www.sendblaster.com/bulk-email-software/wp-content/manage-subscriptions.gif">Manage Subscription section</a> (configuration example)</p>
+            users</em>: this is the main parameter you have to insert inside <a href="http://www.sendblaster.com/bulk-email-software/wp-content/manage-subscriptions.gif">SendBlaster 
+            Manage Subscription</a> section</p>
         </td>
       </tr>
       <tr valign="top"> 
@@ -381,20 +450,21 @@ function wpsb_options() {
         <th width="33%" scope="row">Double Opt-in:</th>
         <td> 
           <input type="checkbox" name="wpsb_double_optin" id="wpsb_double_optin" value="1"<?php echo $double_optin ? " checked" : "";?> />
-        </td>
+          If checked you will receive subscribing emails only when user clicks 
+          on the appropriate link inside confirmation message.</td>
       </tr>
       <tr valign="top"> 
         <th width="33%" scope="row">Link Love:</th>
         <td> 
           <input type="checkbox" name="wpsb_link_love" id="wpsb_link_love" value="1"<?php echo $link_love ? " checked" : "";?> />
-        </td>
+          If unchecked removes Plugin credits from sidebar.</td>
       </tr>
       <tr valign="top">
-        <th width="33%" scope="row">Automatically delete users from table upon 
-          subscription:</th>
+        <th width="33%" scope="row">Delete subscribed users:</th>
         <td>
           <input type="checkbox" name="wpsb_auto_delete" id="wpsb_auto_delete" value="1"<?php echo $auto_delete ? " checked" : "";?> />
-        </td>
+          If checked automatically removes users upon their subscription (use 
+          only if you download your suscriptions daily)</td>
       </tr>
       <tr valign="top"> 
         <td colspan="2">&nbsp;</td>
@@ -424,6 +494,12 @@ function wpsb_options() {
         <th width="33%" scope="row">Success:</th>
         <td> 
           <input type="text" name="wpsb_msg_sent" id="wpsb_msg_sent" value="<?php echo $msg_sent; ?>" size="40">
+        </td>
+      </tr>
+	  <tr valign="top"> 
+        <th width="33%" scope="row">Unsubscribe success:</th>
+        <td> 
+          <input type="text" name="wpsb_form_fld[wpsb_unsubscr_success]" id="wpsb_unsubscr_success" value="<?php echo $form_fields['wpsb_unsubscr_success']; ?>" size="40">
         </td>
       </tr>
       <tr valign="top"> 
@@ -545,6 +621,18 @@ function wpsb_options() {
           <input type="text" name="wpsb_form_fld[15]" id="wpsb_form_fld15" value="<?php echo $form_fields[15]; ?>" size="40" maxlength="64">
         </td>
       </tr>
+	  <tr valign="top"> 
+        <th width="33%" scope="row">Subscribe label:</th>
+        <td> 
+          <input type="text" name="wpsb_form_fld[wpsb_radio_in]" id="wpsb_form_fld16" value="<?php echo $form_fields['wpsb_radio_in']; ?>" size="40" maxlength="64">
+        </td>
+      </tr>
+	  <tr valign="top"> 
+        <th width="33%" scope="row">Unsubscribe label:</th>
+        <td> 
+          <input type="text" name="wpsb_form_fld[wpsb_radio_out]" id="wpsb_form_fld17" value="<?php echo $form_fields['wpsb_radio_out']; ?>" size="40" maxlength="64">
+        </td>
+      </tr>
       <tr valign="top"> 
         <th width="33%" scope="row">Submit button:</th>
         <td> 
@@ -563,8 +651,8 @@ function wpsb_options() {
 </div>
 <div class="wrap">
 <h2>Temp Opted-in users backup</h2>
-  <p>Delete the emails from this panel once you have downloaded subscriptions 
-    with your mailing list software. <br />
+  <p>Delete users from this panel once you have downloaded subscriptions with 
+    your mailing list software. <br />
 </p>
 <?php
 	if ($users = $wpdb->get_results("SELECT * FROM $table_users WHERE `msg_sent` = '1' ORDER BY `id` DESC")) {
@@ -587,9 +675,27 @@ function wpsb_options() {
 <?php
 	}
 	if ($users = $wpdb->get_results("SELECT * FROM $table_users ORDER BY `id` DESC")) {
+		$user_no=0;
+		$url = get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=' .
+			basename(__FILE__);
 ?>
 <table class="widefat">
-<thead>
+<thead>    
+	<tr align="right"> 
+      <td colspan="6" nowrap> 
+        <form name="form1" method="get" action="">
+          Purge non opted-in users: 
+          <select name="purge" id="purge">
+            <option value="0">Select...</option>
+            <option value="1">All</option>
+            <option value="2">Older than 1 week</option>
+            <option value="3">Older than 2 weeks</option>
+            <option value="4">Older than 1 month</option>
+          </select>
+          <input type="button" name="prg_btn" id="prg_btn" value="Go" onClick="if(this.form.purge.selectedIndex != 0 && confirm('Are you sure you want to proceed?')){top.location.href='<?php echo $url; ?>&purge=' + this.form.purge.options[this.form.purge.selectedIndex].value;}">
+		</form>
+	  </td>
+</tr>
 <tr>
 <th scope="col">ID</th>
 <th scope="col">Date/Time</th>
@@ -601,9 +707,7 @@ function wpsb_options() {
 </thead>
 <tbody>
 <?php
-		$user_no=0;
-		$url = get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=' .
-			basename(__FILE__) . '&user_id=';
+		$url = $url . '&user_id=';
 		foreach ($users as $user) {
 			if ($user_no&1) {
 				echo "<tr class='alternate'>";
@@ -624,7 +728,7 @@ function wpsb_options() {
 ?>
 </tbody>
 </table>
-</div>
+<p><em>ToolTip</em>: to insert the module in a page: 1) install the <a href="http://wordpress.org/extend/plugins/exec-php/">exec php</a> plugin; 2) insert this code in your pages: &lt;?php wpsb_opt_in(); ?&gt;</p></div>
 <?php
 	}
 }
