@@ -3,7 +3,7 @@
 Plugin Name: Events Calendar
 Plugin URI: http://www.lukehowell.com/events-calendar/
 Description: There are options under the widget options to specify the view of the calendar in the sidebar.  The widget can be a list for upcoming events or a calendar.  If you do not have a widget ready theme then you can place '&lt;?php sidebarEventsCalendar();?&gt;' in the sidebar file.  If you want to display a large calendar in a post or a page, simply place "[[EventsCalendarLarge]]" in the html of the post or page.  Make sure to leave off the quotes.
-Version: 6.3.2
+Version: 6.4
 Author: Luke Howell
 Author URI: http://www.lukehowell.com/
 
@@ -34,6 +34,11 @@ require_once(EVENTSCALENDARCLASSPATH . '/ec_db.class.php');
 require_once(EVENTSCALENDARCLASSPATH . '/ec_widget.class.php');
 require_once(EVENTSCALENDARCLASSPATH . '/ec_management.class.php');
 
+/* Added for localisation by Heirem -------------------------------------------***/
+load_plugin_textdomain('events-calendar','wp-content/plugins/events-calendar/lang');
+$locale = get_locale(); $setloc = explode("_",$locale); $setloc = $setloc[0];
+setlocale(LC_TIME, $setloc); // setlocale(LC_TIME, 'fr');
+/***---------------------------------------------------------------------------***/
 
 if(isset($_GET['EC_view']) && $_GET['EC_view'] == 'day') {
   $EC_date = date('Y-m-d', mktime(0, 0, 0, $_GET['EC_month'], $_GET['EC_day'], $_GET['EC_year']));
@@ -81,9 +86,11 @@ function EventsCalendarManagementINIT() {
   $options = get_option('optionsEventsCalendar');
   $EC_userLevel = isset($options['accessLevel']) && !empty($options['accessLevel']) ? $options['accessLevel'] : 'level_10';
   $management = new EC_management();
-  add_submenu_page('events-calendar', 'Events Calendar', 'Calendar', $EC_userLevel,  'events-calendar', array(&$management, 'calendarOptions'));
-  add_menu_page('Events Calendar', 'Events Calendar', $EC_userLevel, 'events-calendar', array(&$management, 'display'));
-  add_submenu_page('events-calendar', 'Events Calendar Options', 'Options', $EC_userLevel, 'events-calendar-options', array(&$management, 'calendarOptions'));
+  /* Added for localisation by Heirem -------------------------------------------***/
+  add_submenu_page('events-calendar', __('Events Calendar','events-calendar'), __('Calendar','events-calendar'), $EC_userLevel,  'events-calendar', array(&$management, 'calendarOptions'));
+  add_menu_page(__('Events Calendar','events-calendar'), __('Events Calendar','events-calendar'), $EC_userLevel, 'events-calendar', array(&$management, 'display'));
+  add_submenu_page('events-calendar', __('Events Calendar Options','events-calendar'), __('Options','events-calendar'), $EC_userLevel, 'events-calendar-options', array(&$management, 'calendarOptions'));
+  /***---------------------------------------------------------------------------***/
 }
   
 

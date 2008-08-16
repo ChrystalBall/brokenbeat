@@ -27,14 +27,32 @@ class EC_ManagementJS {
     $endTime = isset($e->eventEndTime) ? $e->eventEndTime : '';
     $accessLevel = $e->accessLevel;
     $postID = $e->postID;
-    $output .= "<strong>Title: </strong>$title<br />";
+    /* $output .= "<strong>Title: </strong>$title<br />";
     $output .= "<strong>Location: </strong>$location<br />";
     $output .= "<strong>Description: </strong>$description<br />";
     $output .= "<strong>Start Date: </strong>$startDate<br />";
     $output .= "<strong>Start Time: </strong>$startTime<br />";
     $output .= "<strong>End Date: </strong>$endDate<br />";
     $output .= "<strong>End Time: </strong>$endTime<br />";
-    $output .= "<strong>Visibility Level: </strong>$accessLevel<br /><br />";
+    $output .= "<strong>Visibility Level: </strong>$accessLevel<br /><br />"; */
+    /*-- Added for localisation by Heirem ----------------*/
+    $caption = __('Title','events-calendar');
+    $output .= "<strong>$caption: </strong>$title<br />";
+    $caption = __('Location','events-calendar');
+    $output .= "<strong>$caption: </strong>$location<br />";
+    $caption = __('Description','events-calendar');
+    $output .= "<strong>$caption: </strong>$description<br />";
+    $caption = __('Start Date','events-calendar');
+    $output .= "<strong>$caption: </strong>$startDate<br />";
+    $caption = __('Start Time','events-calendar');
+    $output .= "<strong>$caption: </strong>$startTime<br />";
+    $caption = __('End Date','events-calendar');
+    $output .= "<strong>$caption: </strong>$endDate<br />";
+    $caption = __('End Time','events-calendar');
+    $output .= "<strong>$caption: </strong>$endTime<br />";
+    $caption = __('Visibility','events-calendar');
+    $output .= "<strong>$caption: </strong>$accessLevel<br />";
+    /*-----------------------------------------------------*/
     if($output != ''):
 ?>
     <script type="text/javascript">
@@ -57,7 +75,9 @@ class EC_ManagementJS {
             track:true
           });
           $('#events-calendar-delete-<?php echo $id;?>').click(function() {
-            doDelete = confirm("Are you sure you want to delete the following event\n<?php echo $e->eventTitle;?>");
+          <!-- Added for localisation by Heirem -->
+            doDelete = confirm("<?php _e('Are you sure you want to delete the following event:\n','events-calendar');echo $e->eventTitle;?>");
+          <!-- -------------------------------- -->
             if(doDelete) {
               $.get("<?php echo get_option('siteurl');?>/wp-admin/admin.php?page=events-calendar",
               {EC_action: "ajaxDelete", EC_id: <?php echo $e->id;?>},
