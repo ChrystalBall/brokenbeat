@@ -6,35 +6,19 @@ class EC_Day {
   var $db;
   
   function EC_Day() {
+    require_once(ABSWPINCLUDE.'/pluggable.php');
     $this->db = new EC_DB();
   }
   
   function display($d) {
+?>  
+    <link type="text/css" rel="stylesheet" href="<?php bloginfo('siteurl');?>/wp-includes/js/thickbox/thickbox.css" />  
+    <link type="text/css" rel="stylesheet" href="<?php echo EVENTSCALENDARCSSURL;?>/events-calendar.css" />
+<?php    
     $options = get_option('optionsEventsCalendar');
     $events = $this->db->getDaysEvents($d);
     list($ec_year, $ec_month, $ec_day) = split('-', $d);
 ?>
-<style type="text/css">
-/*
- * Days events calendar
- */
-#EC_daysEvents {
-  font-size: 14px;
-}
-.EC_title {
-  background: #A4CAE6;
-}
-.EC_location {
-  background: #FFF8DC;
-}
-.EC_time {
-  background: #CCCCCC;
-}
-.EC_date {
-  background: #E0EEEE;
-  text-align: center;
-}
-</style>
       <div id="EC_daysEvents">
 <?php
     foreach($events as $event) {
@@ -65,9 +49,9 @@ class EC_Day {
 <?php
       if(!empty($location) || !is_null($location)):
 ?>
-      <!-- Added for localisation by Heirem ---------------- -->
+
       <div for="EC_location" class="EC_location"><strong><?php _e('Location','events-calendar'); ?>:</strong> <?php echo $location;?></div>
-      <!-- ------------------------------------------------- -->
+
 <?php
       endif;
 
@@ -77,12 +61,12 @@ class EC_Day {
 <?php
       endif;
 
-      if(!empty($endTime) && !empty($startTime) || !is_null($endTime) && !is_null($startTime)):
-      /* Added for localisation by Heirem --------------------*/
+      if((!empty($endTime) && !empty($startTime)) || (!is_null($endTime) && !is_null($startTime))):
+
 ?>
        <?php _e('to','events-calendar');?> <strong><?php echo $endTime;?></strong>
 <?php
-      /* -----------------------------------------------------*/
+
       endif;
 
       if(!empty($startTime) || !is_null($startTime)):
@@ -95,7 +79,7 @@ class EC_Day {
 <?php
       if($event->eventStartDate != $event->eventEndDate ):
 ?>
-      <div for="EC_date" class="EC_date"><?php echo $startDate;?> :: <?php echo $endDate;?></div>
+      <div for="EC_date" class="EC_date"><?php echo $startDate;?> >> <?php echo $endDate;?></div>
 <?php
       endif;
 ?>

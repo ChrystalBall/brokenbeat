@@ -1,12 +1,12 @@
 === Events Calendar ===
 
-Contributors: snumb130, bbodine1, ronbme
+Contributors: snumb130, bbodine1, ronbme, heirem
 Donate link: http://www.lukehowell.com/donate
-Version: 6.4
+Version: 6.5.1
 Tags: widget, admin, sidebar, plugin, javascript, date, time, calendar, thickbox, jquery, tooltip, ajax
 Requires at least: 2.5
-Tested up to: 2.5.1
-Stable tag: 6.4
+Tested up to: 2.6.1
+Stable tag: 6.5.1
 
 Events-Calendar is a diverse replacement for the original calendar included with WordPress adding many useful functions to keep track of your events. The plugin has an easy to use admin section that displays a big readable calendar and lets you add and delete events. The plugin is widget ready so you can easily add a small calendar to the main sidebar with the ability to roll over the highlighted event day to see a brief description of the event or click the day to get a full description of the event without ever leaving your current page. If you are not using a widget ready theme, you can still have the calendar on your sidebar.  Simply place "<?php sidebarEventsCalendar();?>" in the sidebar file. The widget can also show a specified number of events as a list.  You will find these options under the widget option.
 
@@ -16,7 +16,7 @@ Events-Calendar is a diverse replacement for the original calendar included with
 
 The ability to add a large public calendar is now available by posting a page and adding "[[EventsCalendarLarge]]" to the page content to create a stand alone calendar page. Also, when entering an event from the admin section, you can check the box saying "Create Post for Event", which will cause a post to be created with the event information.
 
-Additional features are being added regularly so make sure that you keep up to date on upcoming changes and new features by subscribing to the RSS feed - http://www.lukehowell.com/feed.
+Additional features are being added regularly so make sure that you keep up to date on upcoming changes and new features by subscribing to the RSS feed - http://www.lukehowell.com/feed. Events-Calendar should normally be taken care over by Heirem in the future. More information about at http://heirem.fr
 
 == Installation ==
 
@@ -37,7 +37,34 @@ Additional features are being added regularly so make sure that you keep up to d
 == Change Log ==
 
 <pre><code>
-Versionm 6.4
+Version 6.5.1 realised by Heirem,
+  Fixed Some optimisations of code in routines
+  Fixed Validation W3C XHTML 1.0
+  Fixed Conflicts jQuery code optionnal due to issues in navigation months in calendar
+  Added Function to displays Events List in the sidebar without widgets.
+  Fixed Links in Javascript code to réfresh calendar when permalinks issues
+  Fixed Management of the coma during events records
+Version 6.5 realised by Heirem, with the active participation of Maida, Andy, Pepawo, Justin, Mayur
+  Fixed Conflicts jQuery with orther plugin like cforms
+  Fixed Options are now initialized at the activation 
+  Fixed Line moved for compatibility with Role Scoper
+  Fixed The days of the week are now displayed correctly in short format for the Slavic languages in UTF-8
+  Fixed Event List is now localized
+  Fixed The day of the week now corresponding to the date in all latitudes
+  Fixed The dot is now supported as a separator for the interpretation of the date
+  Fixed The creation of an event can not be done with a empty title
+  Added Submenu Add Event
+  Added Event List diplay a message when there is no events
+  Added An event can now be linked to an article. A click on the Large calendar or in the Events list in sidebar opens the corresponding page
+  Added The ThickBox is now a little larger
+  Added An option to indiquet the adaptation of the stylesheet plugin
+  Added In modification of event you can associate a post with its ID
+  Added CSS Rules for the today date in the options
+  Added Possibility to link an event to an external link to the site by its URI
+Version 6.4.1
+  Added fix localization based on the Wordpress classe locale.php instead PHP function set_locale();
+  Added Spain, German and Czech langages files.
+Version 6.4
   Added fix for file_get_contents by Ian72.
   Added localization by Heirem.  Also added French language files.
 Version 6.3.2

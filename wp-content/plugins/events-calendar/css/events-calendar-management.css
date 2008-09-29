@@ -20,6 +20,11 @@
   font-weight: bold;
 }
 
+#today {
+background:gainsboro;
+color:#FFF;
+}
+
 /*
  * JQuery Tooltip
  */

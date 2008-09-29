@@ -8,7 +8,7 @@ class EC_DB {
   
   function EC_DB() {
     global $wpdb;
-    $this->dbVersion = "106";
+    $this->dbVersion = "107";
     $this->db = $wpdb;
     $this->mainTable = $this->db->prefix . 'eventscalendar_main';
     $this->mainTableCaps = $this->db->prefix . 'EventsCalendar_main';
@@ -24,6 +24,7 @@ class EC_DB {
             eventTitle varchar(255) CHARACTER SET utf8 NOT NULL,
             eventDescription text CHARACTER SET utf8 NOT NULL,
             eventLocation varchar(255) CHARACTER SET utf8 default NULL,
+            eventLinkout varchar(255) CHARACTER SET utf8 default NULL,
             eventStartDate date NOT NULL,
             eventStartTime time default NULL,
             eventEndDate date NOT NULL,
@@ -37,7 +38,6 @@ class EC_DB {
       
       add_option("events_calendar_db_version", $this->dbVersion);
     }
-
     
     $installed_ver = get_option( "eventscalendar_db_version" );
 
@@ -47,6 +47,7 @@ class EC_DB {
             eventTitle varchar(255) CHARACTER SET utf8 NOT NULL,
             eventDescription text CHARACTER SET utf8 NOT NULL,
             eventLocation varchar(255) CHARACTER SET utf8 default NULL,
+            eventLinkout varchar(255) CHARACTER SET utf8 default NULL,
             eventStartDate date NOT NULL,
             eventStartTime time default NULL,
             eventEndDate date NOT NULL,
@@ -67,31 +68,61 @@ class EC_DB {
     }
   }
   
-  function addEvent($title, $location, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID) {
+  function initOptions() {
+    $options = get_option('optionsEventsCalendar');
+    if(!is_array($options)) $options = array();
+    if (!isset($options['dateFormatWidget'])) $options['dateFormatWidget'] = 'm-d';
+    if (!isset($options['timeFormatWidget'])) $options['timeFormatWidget'] = 'g:i a';
+    if (!isset($options['dateFormatLarge'])) $options['dateFormatLarge'] = 'n/j/Y';
+    if (!isset($options['timeFormatLarge'])) $options['timeFormatLarge'] = 'g:i a';
+    if (!isset($options['timeStep'])) $options['timeStep'] = '30';
+    if (!isset($options['adaptedCSS'])) $options['adaptedCSS'] = '';
+    if (!isset($options['todayCSS'])) $options['todayCSS'] = 'border:thin solid blue;font-weight: bold;';
+    if (!isset($options['dayHasEventCSS'])) $options['dayHasEventCSS'] = 'color:red;';
+    if (!isset($options['daynamelength'])) $options['daynamelength'] = '3';
+    if (!isset($options['daynamelengthLarge'])) $options['daynamelengthLarge'] = '3';
+    if (!isset($options['accessLevel'])) $options['accessLevel'] = 'level_10';
+    update_option('optionsEventsCalendar', $options);
+  }
+  
+  function addEvent($title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID) {
     $postID = is_null($postID) ? "NULL" : "'$postID'";
     $location = is_null($location) ? "NULL" : "'$location'";
+    $description = is_null($location) ? "NULL" : "'$description'";
+    $startDate = is_null($location) ? "NULL" : "'$startDate'";
+    $endDate = is_null($location) ? "NULL" : "'$endDate'";
+    $linkout = is_null($linkout) ? "NULL" : "'$linkout'";
     $startTime = is_null($startTime) ? "NULL" : "'$startTime'";
+    $accessLevel = is_null($startTime) ? "NULL" : "'$accessLevel'";
     $endTime = is_null($endTime) ? "NULL" : "'$endTime'";
     $sql = "INSERT INTO `$this->mainTable` ("
-          ."`id`, `eventTitle`, `eventDescription`, `eventLocation`, `eventStartDate`, `eventStartTime`, `eventEndDate`, `eventEndTime`, `accessLevel`, `postID`) "
+          ."`id`, `eventTitle`, `eventDescription`, `eventLocation`, `eventLinkout`,`eventStartDate`, `eventStartTime`, `eventEndDate`, `eventEndTime`, `accessLevel`, `postID`) "
           ."VALUES ("
-          ."NULL , '$title', '$description', $location, '$startDate', $startTime, '$endDate', $endTime , '$accessLevel', $postID);";
+          ."NULL , '$title', $description, $location, $linkout, $startDate, $startTime, $endDate, $endTime , $accessLevel, $postID);";
     $this->db->query($sql);
   }
   
-  function editEvent($id, $title, $location, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel) {
+  function editEvent($id, $title, $location, $linkout, $description, $startDate, $startTime, $endDate, $endTime, $accessLevel, $postID) {
+    $postID = is_null($postID) ? "NULL" : "'$postID'";
     $location = is_null($location) ? "NULL" : "'$location'";
+    $description = is_null($location) ? "NULL" : "'$description'";
+    $startDate = is_null($location) ? "NULL" : "'$startDate'";
+    $endDate = is_null($location) ? "NULL" : "'$endDate'";
+    $linkout = is_null($linkout) ? "NULL" : "'$linkout'";
     $startTime = is_null($startTime) ? "NULL" : "'$startTime'";
+    $accessLevel = is_null($startTime) ? "NULL" : "'$accessLevel'";
     $endTime = is_null($endTime) ? "NULL" : "'$endTime'";
     $sql = "UPDATE `$this->mainTable` SET "
           ."`eventTitle` = '$title', "
-          ."`eventDescription` = '$description', "
+          ."`eventDescription` = $description, "
           ."`eventLocation` = $location, "
-          ."`eventStartDate` = '$startDate', "
+          ."`eventLinkout` = $linkout, "
+          ."`eventStartDate` = $startDate, "
           ."`eventStartTime` = $startTime, "
-          ."`eventEndDate` = '$endDate', "
+          ."`eventEndDate` = $endDate, "
           ."`eventEndTime` = $endTime, "
-          ."`accessLevel` = '$accessLevel' WHERE `id` = $id LIMIT 1;";
+          ."`postID` = $postID, "
+          ."`accessLevel` = $accessLevel WHERE `id` = $id LIMIT 1;";
     $this->db->query($sql);
   }
   
