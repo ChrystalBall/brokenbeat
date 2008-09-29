@@ -10,95 +10,108 @@ class EC_ManagementJS {
     $this->db = new EC_DB();
   }
   
-  function calendarData($m, $y) {
+  function calendarData($m, $y) { // Display Tooltip in EC Management    
     $options = get_option('optionsEventsCalendar');
     $lastDay = date('t', mktime(0, 0, 0, $m, 1, $y));
     for($d = 1; $d <= $lastDay; $d++):
-    $sqldate = date('Y-m-d', mktime(0, 0, 0, $m, $d, $y));
-    foreach($this->db->getDaysEvents($sqldate) as $e) :
-    $output = '';
-    $id = "$d-$e->id";
-    $title = $e->eventTitle;
-    $description = preg_replace('#\r?\n#', '<br />', $e->eventDescription);
-    $location = isset($e->eventLocation) ? $e->eventLocation : '';
-    $startDate = $e->eventStartDate;
-    $endDate = $e->eventEndDate;
-    $startTime = isset($e->eventStartTime) ? $e->eventStartTime : '';
-    $endTime = isset($e->eventEndTime) ? $e->eventEndTime : '';
-    $accessLevel = $e->accessLevel;
-    $postID = $e->postID;
-    /* $output .= "<strong>Title: </strong>$title<br />";
-    $output .= "<strong>Location: </strong>$location<br />";
-    $output .= "<strong>Description: </strong>$description<br />";
-    $output .= "<strong>Start Date: </strong>$startDate<br />";
-    $output .= "<strong>Start Time: </strong>$startTime<br />";
-    $output .= "<strong>End Date: </strong>$endDate<br />";
-    $output .= "<strong>End Time: </strong>$endTime<br />";
-    $output .= "<strong>Visibility Level: </strong>$accessLevel<br /><br />"; */
-    /*-- Added for localisation by Heirem ----------------*/
-    $caption = __('Title','events-calendar');
-    $output .= "<strong>$caption: </strong>$title<br />";
-    $caption = __('Location','events-calendar');
-    $output .= "<strong>$caption: </strong>$location<br />";
-    $caption = __('Description','events-calendar');
-    $output .= "<strong>$caption: </strong>$description<br />";
-    $caption = __('Start Date','events-calendar');
-    $output .= "<strong>$caption: </strong>$startDate<br />";
-    $caption = __('Start Time','events-calendar');
-    $output .= "<strong>$caption: </strong>$startTime<br />";
-    $caption = __('End Date','events-calendar');
-    $output .= "<strong>$caption: </strong>$endDate<br />";
-    $caption = __('End Time','events-calendar');
-    $output .= "<strong>$caption: </strong>$endTime<br />";
-    $caption = __('Visibility','events-calendar');
-    $output .= "<strong>$caption: </strong>$accessLevel<br />";
-    /*-----------------------------------------------------*/
-    if($output != ''):
-?>
-    <script type="text/javascript">
-      jQuery(function($) {
-        $(document).ready(function() {
-          $('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?></span><img id=\"events-calendar-delete-<?php echo $id;?>\" src=\"<?php echo EVENTSCALENDARIMAGESURL;?>/delete.gif\" style=\"width:12px;height:12px;\" /><\div>");
-          $('#events-calendar-<?php echo $id;?>').attr('title', '<?php echo $output;?>');
-          $('#events-calendar-<?php echo $id;?>').css('color', 'black');
-          $('#events-calendar-<?php echo $id;?>').mouseover(function() {
-            $(this).css('cursor', 'pointer');
-          });
-          $('#events-calendar-delete-<?php echo $id;?>').mouseover(function() {
-            $(this).css('cursor', 'pointer');
-          });
-          $('#events-calendar-<?php echo $id;?>').click(function() {
-            top.location = "?page=events-calendar&EC_action=edit&EC_id=<?php echo $e->id;?>";
-          });
-          $('#events-calendar-<?php echo $id;?>').Tooltip({
-            delay:0,
-            track:true
-          });
-          $('#events-calendar-delete-<?php echo $id;?>').click(function() {
-          <!-- Added for localisation by Heirem -->
-            doDelete = confirm("<?php _e('Are you sure you want to delete the following event:\n','events-calendar');echo $e->eventTitle;?>");
-          <!-- -------------------------------- -->
-            if(doDelete) {
-              $.get("<?php echo get_option('siteurl');?>/wp-admin/admin.php?page=events-calendar",
-              {EC_action: "ajaxDelete", EC_id: <?php echo $e->id;?>},
-              function(data) {
-                for(d = 1; d <= <?php echo $lastDay;?>; d++) {
-                  $('#events-calendar-container-' + d + '-<?php echo $e->id;?>').css('background', 'red');
-                  $('#events-calendar-container-' + d + '-<?php echo $e->id;?>').fadeOut(1000);
-                }
-              });
+        $sqldate = date('Y-m-d', mktime(0, 0, 0, $m, $d, $y));
+        foreach($this->db->getDaysEvents($sqldate) as $e) :
+            $output = '';
+            $id = "$d-$e->id";
+            $title = $e->eventTitle;
+            $description = preg_replace('#\r?\n#', '<br>', $e->eventDescription);
+            $location = isset($e->eventLocation) ? $e->eventLocation : '';
+            $linkout = isset($e->eventLinkout) ? $e->eventLinkout : '';
+            $startDate = $e->eventStartDate;
+            $endDate = $e->eventEndDate;
+            $startTime = isset($e->eventStartTime) ? $e->eventStartTime : '';
+            $endTime = isset($e->eventEndTime) ? $e->eventEndTime : '';
+            $accessLevel = $e->accessLevel;
+            $PostID = isset($e->postID) ? $e->postID : '';
+            $output .= "<strong>"._c('Title','events-calendar').": </strong>$title<br />";
+            $output .= "<strong>"._c('Location','events-calendar').": </strong>$location<br />";
+            $output .= "<strong>"._c('Description','events-calendar').": </strong>$description<br />";
+            $output .= "<strong>"._c('Start Date','events-calendar').": </strong>$startDate<br />";
+            $output .= "<strong>"._c('Start Time','events-calendar').": </strong>$startTime<br />";
+            $output .= "<strong>"._c('End Date','events-calendar').": </strong>$endDate<br />";
+            $output .= "<strong>"._c('End Time','events-calendar').": </strong>$endTime<br />";
+            $output .= "<strong>"._c('Visibility','events-calendar').": </strong>$accessLevel<br />";
+            $asslink = '';
+            if (!$linkout == '') {
+              $output .= "<strong>"._c('Link out','events-calendar')."</strong> :".substr($linkout,0,19)."<br />";;
+              $asslink ='<img id=\"events-calendar-link-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/link.gif\" style=\"width:10px;height:10px;\" title=\"' . __("Associated link","events-calendar") . '\">&nbsp;';
             }
-          });
-        });
-      });
-    </script>
+            $asspost = '';
+            if (!$PostID == '') {
+              $IDtmp = get_post($PostID);
+              $ptitle = $IDtmp->post_title;
+              // $ptitle = get_post($PostID)->post_title;
+              $output .= "<strong>"._c('Post','events-calendar')." ($PostID)</strong> :".addslashes($ptitle)."<br />";;
+              $asspost = '<img id=\"events-calendar-post-' . $d . '-' . $e->id . '\" src=\"' . EVENTSCALENDARIMAGESURL . '/post.gif\" style=\"width:10px;height:10px;\" title=\"' . __("Associated post","events-calendar") . '\">&nbsp;';
+            }
+
+            if($output != ''):
+?>
+                <script type="text/javascript">
+                // <![CDATA[ 
+                  jQuery.noConflict();
+                  (function($) {
+                    $(document).ready(function() {
+                      $('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><?php echo $asslink, $asspost;?><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?>&nbsp;</span><img id=\"events-calendar-delete-<?php echo $id;?>\" src=\"<?php echo EVENTSCALENDARIMAGESURL;?>/delete.gif\" style=\"width:12px;height:12px;\" title=\"<?php _e('Delete','events-calendar');?>\" /><\div>");
+                      $('#events-calendar-<?php echo $id;?>').attr('title', '<?php echo $output;?>');
+                      $('#events-calendar-<?php echo $id;?>').css('color', 'black');                                            
+                      $('#events-calendar-<?php echo $id;?>').css('font-size', '0.9em');
+                      $('#events-calendar-<?php echo $id;?>').mouseover(function() {
+                        $(this).css('cursor', 'pointer');
+                      });
+                      $('#events-calendar-delete-<?php echo $id;?>').mouseover(function() {
+                        $(this).css('cursor', 'pointer');
+                      });
+                      $('#events-calendar-link-<?php echo $id;?>').mouseover(function() {
+                        $(this).css('cursor', 'pointer');
+                      });
+                      $('#events-calendar-post-<?php echo $id;?>').mouseover(function() {
+                        $(this).css('cursor', 'pointer');
+                      });
+                      $('#events-calendar-<?php echo $id;?>').click(function() {
+                        top.location = "?page=events-calendar&EC_action=edit&EC_id=<?php echo $e->id;?>";
+                      });
+                      $('#events-calendar-link-<?php echo $id;?>').click(function() {
+                        window.open('<?php echo $linkout;?>');
+                      });                      
+                      $('#events-calendar-post-<?php echo $id;?>').click(function() {
+                        window.open('<?php echo get_permalink($PostID);?>');
+                      });
+                      $('#events-calendar-<?php echo $id;?>').Tooltip({
+                        delay:0,
+                        track:true
+                      });
+                      $('#events-calendar-delete-<?php echo $id;?>').click(function() {
+                        doDelete = confirm("<?php _e('Are you sure you want to delete the following event:\n','events-calendar');echo $e->eventTitle;?>");
+                        if(doDelete) {
+                          $.get("<?php bloginfo('siteurl');?>/wp-admin/admin.php?page=events-calendar",
+                          {EC_action: "ajaxDelete", EC_id: <?php echo $e->id;?>},
+                          function(data) {
+                            for(d = 1; d <= <?php echo $lastDay;?>; d++) {
+                              $('#events-calendar-container-' + d + '-<?php echo $e->id;?>').css('background', 'red');
+                              $('#events-calendar-container-' + d + '-<?php echo $e->id;?>').fadeOut(1000);
+                            }
+                          });
+                        }
+                      });
+                    });
+                  })(jQuery);
+                //]]>
+                </script>
 <?php
-    endif;
-    endforeach;
+            endif;
+        endforeach;
     endfor;
 ?>
     <script type="text/javascript">
-      jQuery(function($) {
+    // <![CDATA[ 
+      jQuery.noConflict();
+      (function($) {
         $(document).ready(function() {
           $('#EC_startDate').datepicker({dateFormat: 'yy-mm-dd'});
           $('#EC_endDate').datepicker({dateFormat: 'yy-mm-dd'});
@@ -108,7 +121,8 @@ class EC_ManagementJS {
           $("#EC_startTime").timePicker({step: <?php echo $timeStep;?>});
           $("#EC_endTime").timePicker({step: <?php echo $timeStep;?>});
         });
-      });
+      })(jQuery);
+    //]]>
     </script>
 <?php
   }
