@@ -142,7 +142,9 @@ function mailusers_plugin_deactivation() {
 */
 function mailusers_add_default_user_meta() {
 	global $wpdb;
-	$users = $wpdb->get_results("SELECT id FROM $wpdb->users");
+	$table_users = $wpdb->prefix . "wpsb_users";
+	
+	$users = $wpdb->get_results("SELECT id FROM " . $table_users);
 	foreach ($users as $user) {
 		mailusers_user_register($user->id);
 	}
@@ -366,6 +368,7 @@ function mailusers_update_max_bcc_recipients( $max_bcc_recipients ) {
  */
 function mailusers_get_users( $exclude_id='', $meta_filter = '') {
 	global $wpdb;
+	$table_users = $wpdb->prefix . "wpsb_users";
 
 	$additional_sql_filter = "";
 
@@ -373,10 +376,10 @@ function mailusers_get_users( $exclude_id='', $meta_filter = '') {
 		if ($exclude_id!='') {
 			$additional_sql_filter = " WHERE (id<>" . $exclude_id . ") ";
 		}
-
+		
 	    $users = $wpdb->get_results(
-			  "SELECT id, user_email, display_name "
-			. "FROM $wpdb->users "
+			  "SELECT id, user_email, user_email AS display_name "
+			. "FROM " . $table_users . " "
 			. $additional_sql_filter );
 	} else {
 		if ($exclude_id!='') {
@@ -384,10 +387,10 @@ function mailusers_get_users( $exclude_id='', $meta_filter = '') {
 		}
 		$additional_sql_filter .= " AND (meta_key='" . $meta_filter . "') ";
 		$additional_sql_filter .= " AND (meta_value='true') ";
-
+		
 	    $users = $wpdb->get_results(
-			  "SELECT id, user_email, display_name "
-			. "FROM $wpdb->usermeta, $wpdb->users "
+			  "SELECT id, user_email, user_emai AS display_name "
+			. "FROM $wpdb->usermeta, " . $table_users . " "
 			. "WHERE "
 			. " (user_id = id)"
 			. $additional_sql_filter );
@@ -420,6 +423,7 @@ function mailusers_get_roles( $exclude_id='', $meta_filter = '') {
  */
 function mailusers_get_recipients_from_ids( $ids, $exclude_id='', $meta_filter = '') {
 	global $wpdb;
+	$table_users = $wpdb->prefix . "wpsb_users";
 
 	if (empty($ids)) {
 		return array();
@@ -435,7 +439,7 @@ function mailusers_get_recipients_from_ids( $ids, $exclude_id='', $meta_filter =
 	if ($meta_filter=='') {
 	    $users = $wpdb->get_results(
 			  "SELECT id, user_email, display_name "
-			. "FROM $wpdb->users "
+			. "FROM " . $table_users . " "
 			. "WHERE "
 			. " (id IN (" . implode(", ", $ids) . ")) "
 			. $additional_sql_filter );
@@ -445,7 +449,7 @@ function mailusers_get_recipients_from_ids( $ids, $exclude_id='', $meta_filter =
 
 	    $users = $wpdb->get_results(
 			  "SELECT id, user_email, display_name "
-			. "FROM $wpdb->usermeta, $wpdb->users "
+			. "FROM $wpdb->usermeta, " . $table_users . " "
 			. "WHERE "
 			. " (user_id = id)"
 			. $additional_sql_filter
@@ -461,6 +465,7 @@ function mailusers_get_recipients_from_ids( $ids, $exclude_id='', $meta_filter =
  */
 function mailusers_get_recipients_from_roles($roles, $exclude_id='', $meta_filter = '') {
 	global $wpdb;
+	$table_users = $wpdb->prefix . "wpsb_users";
 
 	if (empty($roles)) {
 		return array();
@@ -484,7 +489,7 @@ function mailusers_get_recipients_from_roles($roles, $exclude_id='', $meta_filte
 		//--
 	    $ids = $wpdb->get_results(
 				  "SELECT id "
-				. "FROM $wpdb->usermeta, $wpdb->users "
+				. "FROM $wpdb->usermeta, " . $table_users . " "
 				. "WHERE "
 				. " (user_id = id) "
 				. ($exclude_id!='' ? ' AND (id<>' . $exclude_id . ')' : '')
@@ -503,7 +508,7 @@ function mailusers_get_recipients_from_roles($roles, $exclude_id='', $meta_filte
 
 		$users = $wpdb->get_results(
 				  "SELECT id, user_email, display_name "
-				. "FROM $wpdb->usermeta, $wpdb->users "
+				. "FROM $wpdb->usermeta, " . $table_users . " "
 				. "WHERE "
 				. " (user_id = id) "
 				. " AND (id in (" . $id_list . ")) "
@@ -512,7 +517,7 @@ function mailusers_get_recipients_from_roles($roles, $exclude_id='', $meta_filte
 	} else {
 	    $users = $wpdb->get_results(
 				  "SELECT id, user_email, display_name "
-				. "FROM $wpdb->usermeta, $wpdb->users "
+				. "FROM $wpdb->usermeta, " . $table_users . " "
 				. "WHERE "
 				. " (user_id = id) "
 				. ( $exclude_id!='' ? ' AND (id<>' . $exclude_id . ')' : '' )
