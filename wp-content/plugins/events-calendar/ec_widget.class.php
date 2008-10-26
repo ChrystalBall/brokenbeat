@@ -3,7 +3,7 @@ if(!class_exists('EC_Widget')) :
 require_once(EVENTSCALENDARCLASSPATH . '/ec_calendar.class.php');
 require_once(EVENTSCALENDARCLASSPATH . '/ec_js.class.php');
 
-class EC_Widget {
+class EC_Widget { // Display widget calendar
   var $month;
   var $year;
   var $calendar;
@@ -14,8 +14,8 @@ class EC_Widget {
     $this->year = $_GET['EC_action'] == 'switchMonth' ? $_GET['EC_year'] : date('Y');
   }
 
-  function display($args) { 
-    $js = new EC_JS();     
+  function display($args) {
+    $js = new EC_JS();
     extract($args);
     echo $before_widget;
     $options = get_option('widgetEventsCalendar');

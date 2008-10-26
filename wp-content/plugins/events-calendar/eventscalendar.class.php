@@ -15,11 +15,11 @@ class EventsCalendar {
   function displayWidget($args) {
     $this->widget->display($args);
   }
-  
+
   function displayManagementPage() {
     $this->management->display();
   }
-  
+
   function displayOptionsPage() {
     $this->management->calendarOptions();
   }

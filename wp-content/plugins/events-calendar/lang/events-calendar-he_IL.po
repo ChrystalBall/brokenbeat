@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: events-calendar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-18 17:00+0100\n"
-"PO-Revision-Date: 2008-09-06 00:07+0100\n"
+"PO-Revision-Date: 2008-09-24 23:10+0100\n"
 "Last-Translator: Heirem <rmalkafr@yahoo.fr>\n"
 "Language-Team: Heirem <rmalkafr@yahoo.fr>\n"
 "MIME-Version: 1.0\n"
@@ -14,8 +14,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_c\n"
 "X-Poedit-Language: Hebrew\n"
 "X-Poedit-Country: ISRAEL\n"
-"X-Poedit-SearchPath-0: D:\\WebServ\\wwwroot\\htdocs\\heirem\\wp-content\\plugins\\events-calendar\n"
-"X-Poedit-SearchPath-1: D:\\wamp\\www\\www\\wp-content\\plugins\\events-calendar\n"
+"X-Poedit-SearchPath-0: ..\\.\n"
 
 #: D:\WebServ\wwwroot\htdocs\heirem\wp-content\plugins\events-calendar/ec_calendar.class.php:55
 #: D:\wamp\www\www\wp-content\plugins\events-calendar/ec_calendar.class.php:55
