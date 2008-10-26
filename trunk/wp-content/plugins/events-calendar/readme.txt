@@ -2,11 +2,11 @@
 
 Contributors: snumb130, bbodine1, ronbme, heirem
 Donate link: http://www.lukehowell.com/donate
-Version: 6.5.1
+Version: 6.5.2.1
 Tags: widget, admin, sidebar, plugin, javascript, date, time, calendar, thickbox, jquery, tooltip, ajax
 Requires at least: 2.5
 Tested up to: 2.6.1
-Stable tag: 6.5.1
+Stable tag: 6.5.2.1
 
 Events-Calendar is a diverse replacement for the original calendar included with WordPress adding many useful functions to keep track of your events. The plugin has an easy to use admin section that displays a big readable calendar and lets you add and delete events. The plugin is widget ready so you can easily add a small calendar to the main sidebar with the ability to roll over the highlighted event day to see a brief description of the event or click the day to get a full description of the event without ever leaving your current page. If you are not using a widget ready theme, you can still have the calendar on your sidebar.  Simply place "<?php sidebarEventsCalendar();?>" in the sidebar file. The widget can also show a specified number of events as a list.  You will find these options under the widget option.
 
@@ -37,6 +37,18 @@ Additional features are being added regularly so make sure that you keep up to d
 == Change Log ==
 
 <pre><code>
+Version 6.5.2.1
+  Fixed tooltip type in ec_js.class.php
+Version 6.5.2 realised by Heirem,
+  Fixed Some corrections in recording into database.
+  Fixed Bug in jQuery plugin Datepicker 1.5.2 : replace ui.datepicker.min.js by ui.datepicker.js
+  Fixed In the small calendar navigation fails with the passage of years
+  Fixed Implementation of effective jQuery extreme conflict management
+  Added Option checkbox : jQuery extrem protection or not
+  Fixed With some databases the 'EventsCalendar_main' table creation was not at the activation plugin
+  Added Updated jQuery Tooltip in 1.3 
+  Added jQuery bgiframe plugin for correcting Tooltips with IE
+  Fixed jQuery event change() replaced by click() to work with IE
 Version 6.5.1 realised by Heirem,
   Fixed Some optimisations of code in routines
   Fixed Validation W3C XHTML 1.0

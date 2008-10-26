@@ -3,14 +3,14 @@ if(!class_exists('EC_ManagementJS')) :
 
 require_once(EVENTSCALENDARCLASSPATH.'/ec_db.class.php');
 
-class EC_ManagementJS {
+class EC_ManagementJS { // Dashboeard calendar management content
   var $db;
-  
+
   function EC_ManagementJS() {
     $this->db = new EC_DB();
   }
-  
-  function calendarData($m, $y) { // Display Tooltip in EC Management    
+
+  function calendarData($m, $y) { // Display Tooltip in EC Management
     $options = get_option('optionsEventsCalendar');
     $lastDay = date('t', mktime(0, 0, 0, $m, 1, $y));
     for($d = 1; $d <= $lastDay; $d++):
@@ -53,13 +53,13 @@ class EC_ManagementJS {
             if($output != ''):
 ?>
                 <script type="text/javascript">
-                // <![CDATA[ 
+                // <![CDATA[
                   jQuery.noConflict();
                   (function($) {
                     $(document).ready(function() {
                       $('#events-calendar-<?php echo $d;?>').append("<div id=\"events-calendar-container-<?php echo $id;?>\"><?php echo $asslink, $asspost;?><span id=\"events-calendar-<?php echo $id;?>\"><?php echo $title;?>&nbsp;</span><img id=\"events-calendar-delete-<?php echo $id;?>\" src=\"<?php echo EVENTSCALENDARIMAGESURL;?>/delete.gif\" style=\"width:12px;height:12px;\" title=\"<?php _e('Delete','events-calendar');?>\" /><\div>");
                       $('#events-calendar-<?php echo $id;?>').attr('title', '<?php echo $output;?>');
-                      $('#events-calendar-<?php echo $id;?>').css('color', 'black');                                            
+                      $('#events-calendar-<?php echo $id;?>').css('color', 'black');
                       $('#events-calendar-<?php echo $id;?>').css('font-size', '0.9em');
                       $('#events-calendar-<?php echo $id;?>').mouseover(function() {
                         $(this).css('cursor', 'pointer');
@@ -78,11 +78,11 @@ class EC_ManagementJS {
                       });
                       $('#events-calendar-link-<?php echo $id;?>').click(function() {
                         window.open('<?php echo $linkout;?>');
-                      });                      
+                      });
                       $('#events-calendar-post-<?php echo $id;?>').click(function() {
                         window.open('<?php echo get_permalink($PostID);?>');
                       });
-                      $('#events-calendar-<?php echo $id;?>').Tooltip({
+                      $('#events-calendar-<?php echo $id;?>').tooltip({
                         delay:0,
                         track:true
                       });
@@ -107,19 +107,52 @@ class EC_ManagementJS {
             endif;
         endforeach;
     endfor;
+    $this->calendarjs();
+  }
+  function calendarjs() {
+    global $loc_lang;
 ?>
     <script type="text/javascript">
-    // <![CDATA[ 
+    // <![CDATA[
       jQuery.noConflict();
       (function($) {
         $(document).ready(function() {
-          $('#EC_startDate').datepicker({dateFormat: 'yy-mm-dd'});
-          $('#EC_endDate').datepicker({dateFormat: 'yy-mm-dd'});
-<?php
-          $timeStep = (isset($options['timeStep']) && !empty($options['timeStep'])) ? $options['timeStep'] : 30;
-?>
-          $("#EC_startTime").timePicker({step: <?php echo $timeStep;?>});
-          $("#EC_endTime").timePicker({step: <?php echo $timeStep;?>});
+          $("#EC_startDate").datepicker($.extend({},
+               $.datepicker.regional["<?php echo $loc_lang; ?>"], {
+                  showOn: "button",
+                  showStatus: true,
+                  buttonImage: "<?php echo EVENTSCALENDARIMAGESURL."/calendar.gif";?>",
+                  buttonImageOnly: true,
+                  dateFormat: 'yy-mm-dd',
+                  firstDay: <?php echo get_option('start_of_week');?>
+              }
+          ));
+          $("#EC_endDate").datepicker($.extend({},
+               $.datepicker.regional["<?php echo $loc_lang; ?>"], {
+                  showOn: "button",
+                  showStatus: true,
+                  buttonImage: "<?php echo EVENTSCALENDARIMAGESURL."/calendar.gif";?>",
+                  buttonImageOnly: true,
+                  dateFormat: 'yy-mm-dd',
+                  firstDay: <?php echo get_option('start_of_week');?>
+              }
+          ));
+          $("#EC_start_clockpick").clockpick({
+              military: true,
+              useBgiframe: true,
+              valuefield: 'EC_startTime',
+              starthour: '0',
+              endhour: '23',
+              layout: 'horizontal'
+          });
+          $("#EC_end_clockpick").clockpick({
+              military: true,
+              useBgiframe: true,
+              valuefield: 'EC_endTime',
+              starthour: '0',
+              endhour: '23',
+              layout: 'horizontal'
+          });
         });
       })(jQuery);
     //]]>

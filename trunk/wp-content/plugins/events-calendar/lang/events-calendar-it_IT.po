@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_c\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: MEXICO\n"
-"X-Poedit-SearchPath-0: D:\\wamp\\www\\heirem\\wp-content\\plugins\\events-calendar\n"
+"X-Poedit-SearchPath-0: ..\\.\n"
 
 #: D:\wamp\www\heirem\wp-content\plugins\events-calendar/ec_calendar.class.php:57
 msgid "Events are coming soon, stay tuned!"

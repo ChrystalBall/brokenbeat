@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
-"X-Poedit-SearchPath-0: D:\\wamp\\www\\castalie\\wp-content\\plugins\\events-calendar\n"
+"X-Poedit-SearchPath-0: ..\\.\n"
 
 #: D:\wamp\www\castalie\wp-content\plugins\events-calendar/ec_calendar.class.php:168
 msgid "Events"
